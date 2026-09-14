@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SafeSignal Analytics Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#002204",
+                      "on-tertiary-container": "#ffe0bb",
+                      "inverse-primary": "#a9c7ff",
+                      "on-background": "#141b2b",
+                      "on-error-container": "#93000a",
+                      "surface-tint": "#005db7",
+                      "secondary": "#1b6d24",
+                      "background": "#f9f9ff",
+                      "surface-variant": "#dce2f7",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed": "#001b3d",
+                      "surface-container-high": "#e1e8fd",
+                      "tertiary-fixed-dim": "#ffb957",
+                      "outline": "#727783",
+                      "on-secondary-container": "#217128",
+                      "secondary-container": "#a0f399",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#88d982",
+                      "on-secondary": "#ffffff",
+                      "on-primary-container": "#dae5ff",
+                      "primary-container": "#1565c0",
+                      "on-tertiary": "#ffffff",
+                      "surface-dim": "#d3daef",
+                      "on-primary-fixed-variant": "#00468c",
+                      "primary": "#004d99",
+                      "on-surface": "#141b2b",
+                      "tertiary": "#6d4500",
+                      "on-secondary-fixed-variant": "#005312",
+                      "on-tertiary-fixed-variant": "#643f00",
+                      "tertiary-container": "#8e5b00",
+                      "tertiary-fixed": "#ffddb5",
+                      "surface-bright": "#f9f9ff",
+                      "inverse-surface": "#293040",
+                      "on-error": "#ffffff",
+                      "surface": "#f9f9ff",
+                      "primary-fixed-dim": "#a9c7ff",
+                      "surface-container-highest": "#dce2f7",
+                      "secondary-fixed": "#a3f69c",
+                      "on-primary": "#ffffff",
+                      "outline-variant": "#c2c6d4",
+                      "on-surface-variant": "#424752",
+                      "surface-container": "#e9edff",
+                      "error": "#ba1a1a",
+                      "surface-container-low": "#f1f3ff",
+                      "primary-fixed": "#d6e3ff",
+                      "inverse-on-surface": "#edf0ff",
+                      "on-tertiary-fixed": "#2a1800"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "gutter": "24px",
+                      "xs": "4px",
+                      "margin-desktop": "32px",
+                      "base": "8px",
+                      "lg": "24px",
+                      "margin-mobile": "16px",
+                      "md": "16px",
+                      "xl": "32px",
+                      "xxl": "48px",
+                      "container-max": "1440px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-sm": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-lg": [
+                              "Inter"
+                      ],
+                      "title-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "title-lg": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.25px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.5px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.1px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "title-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.15px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.5px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "title-lg": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "57px",
+                              {
+                                      "lineHeight": "64px",
+                                      "letterSpacing": "-0.25px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #F8FAFC;
+        }
+        .card-shadow {
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col">
+
+    {{DATA:COMPONENTS:COMPONENTS_2}}
+
+    <div class="flex-1 w-full max-w-container-max mx-auto px-gutter py-margin-desktop">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface">Analytics Overview</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-sm">Real-time threat intelligence and network performance.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md py-sm bg-surface-container-lowest border border-outline-variant rounded-lg text-primary text-label-lg font-label-lg hover:bg-surface-container transition-colors shadow-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Export Data
+                </button>
+<button class="px-md py-sm bg-primary-container text-on-primary-container rounded-lg text-label-lg font-label-lg hover:bg-primary hover:text-on-primary transition-colors shadow-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                    Last 30 Days
+                </button>
+</div>
+</div>
+<!-- Metric Cards -->
+<div class="bento-grid mb-xl">
+<!-- Total Checks -->
+<div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest rounded-[20px] border border-outline-variant card-shadow p-lg">
+<div class="flex justify-between items-start mb-md">
+<h3 class="text-title-md font-title-md text-on-surface-variant">Total Checks</h3>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]">fact_check</span>
+</div>
+</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mb-sm">1.2M</div>
+<div class="flex items-center text-label-md font-label-md text-secondary">
+<span class="material-symbols-outlined text-[14px] mr-xs">trending_up</span>
+                    +12.5% from last month
+                </div>
+</div>
+<!-- Average Risk -->
+<div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest rounded-[20px] border border-outline-variant card-shadow p-lg">
+<div class="flex justify-between items-start mb-md">
+<h3 class="text-title-md font-title-md text-on-surface-variant">Average Risk Score</h3>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[18px]">speed</span>
+</div>
+</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mb-sm">42/100</div>
+<div class="flex items-center text-label-md font-label-md text-outline">
+<span class="material-symbols-outlined text-[14px] mr-xs">trending_flat</span>
+                    Stable across network
+                </div>
+</div>
+<!-- High Risk % -->
+<div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest rounded-[20px] border border-outline-variant card-shadow p-lg">
+<div class="flex justify-between items-start mb-md">
+<h3 class="text-title-md font-title-md text-on-surface-variant">High Risk Flags</h3>
+<div class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-error-container text-[18px]">warning</span>
+</div>
+</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mb-sm">3.8%</div>
+<div class="flex items-center text-label-md font-label-md text-error">
+<span class="material-symbols-outlined text-[14px] mr-xs">trending_up</span>
+                    +0.4% from last week
+                </div>
+</div>
+<!-- Reports Submitted -->
+<div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest rounded-[20px] border border-outline-variant card-shadow p-lg">
+<div class="flex justify-between items-start mb-md">
+<h3 class="text-title-md font-title-md text-on-surface-variant">Reports Submitted</h3>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]">description</span>
+</div>
+</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mb-sm">8,432</div>
+<div class="flex items-center text-label-md font-label-md text-secondary">
+<span class="material-symbols-outlined text-[14px] mr-xs">trending_up</span>
+                    +5.2% processing rate
+                </div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="bento-grid mb-xl">
+<!-- Recent Trends (Line Chart) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-[20px] border border-outline-variant card-shadow">
+<div class="p-lg border-b border-outline-variant">
+<h3 class="text-title-md font-title-md text-on-surface">Recent Threat Trends</h3>
+</div>
+<div class="p-lg h-[300px] relative w-full">
+<canvas id="trendsChart"></canvas>
+</div>
+</div>
+<!-- Risk Distribution (Pie Chart) -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-[20px] border border-outline-variant card-shadow">
+<div class="p-lg border-b border-outline-variant">
+<h3 class="text-title-md font-title-md text-on-surface">Risk Distribution</h3>
+</div>
+<div class="p-lg h-[300px] relative w-full flex items-center justify-center">
+<canvas id="riskPieChart"></canvas>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Heatmap & Table -->
+<div class="bento-grid">
+<!-- Top Threat Sources (Bar/Heatmap representation) -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-[20px] border border-outline-variant card-shadow flex flex-col">
+<div class="p-lg border-b border-outline-variant">
+<h3 class="text-title-md font-title-md text-on-surface">Top Threat Sources</h3>
+</div>
+<div class="p-lg flex-1 flex flex-col gap-md">
+<!-- Source 1 -->
+<div>
+<div class="flex justify-between text-body-md font-body-md mb-xs">
+<span class="font-medium">API Gateway A</span>
+<span class="text-on-surface-variant">45%</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<!-- Source 2 -->
+<div>
+<div class="flex justify-between text-body-md font-body-md mb-xs">
+<span class="font-medium">Legacy Node 3</span>
+<span class="text-on-surface-variant">28%</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-tertiary-fixed-dim h-2 rounded-full" style="width: 28%"></div>
+</div>
+</div>
+<!-- Source 3 -->
+<div>
+<div class="flex justify-between text-body-md font-body-md mb-xs">
+<span class="font-medium">External Webhook</span>
+<span class="text-on-surface-variant">15%</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-primary-container h-2 rounded-full" style="width: 15%"></div>
+</div>
+</div>
+<!-- Source 4 -->
+<div>
+<div class="flex justify-between text-body-md font-body-md mb-xs">
+<span class="font-medium">Mobile Auth Endpoint</span>
+<span class="text-on-surface-variant">12%</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-outline h-2 rounded-full" style="width: 12%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent High-Risk Detections Table -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-[20px] border border-outline-variant card-shadow overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<h3 class="text-title-md font-title-md text-on-surface">Recent High-Risk Detections</h3>
+<button class="text-primary text-label-md font-label-md hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-lowest">
+<th class="p-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Timestamp</th>
+<th class="p-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Source IP</th>
+<th class="p-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Event Type</th>
+<th class="p-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="p-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-right">Action</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<tr class="border-b border-outline-variant hover:bg-[#F1F5F9] transition-colors">
+<td class="p-md text-on-surface-variant">Oct 24, 14:32:01</td>
+<td class="p-md font-medium">192.168.1.105</td>
+<td class="p-md">Multiple Failed Logins</td>
+<td class="p-md">
+<span class="px-2 py-1 bg-[#ffdad6] text-[#93000a] text-[10px] font-bold rounded-full uppercase tracking-wide">Critical</span>
+</td>
+<td class="p-md text-right">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-[#F1F5F9] transition-colors">
+<td class="p-md text-on-surface-variant">Oct 24, 14:28:45</td>
+<td class="p-md font-medium">10.0.0.42</td>
+<td class="p-md">Unusual Data Transfer</td>
+<td class="p-md">
+<span class="px-2 py-1 bg-[#ffe0bb] text-[#8e5b00] text-[10px] font-bold rounded-full uppercase tracking-wide">Warning</span>
+</td>
+<td class="p-md text-right">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-[#F1F5F9] transition-colors">
+<td class="p-md text-on-surface-variant">Oct 24, 14:15:12</td>
+<td class="p-md font-medium">172.16.254.1</td>
+<td class="p-md">API Rate Limit Exceeded</td>
+<td class="p-md">
+<span class="px-2 py-1 bg-[#ffe0bb] text-[#8e5b00] text-[10px] font-bold rounded-full uppercase tracking-wide">Warning</span>
+</td>
+<td class="p-md text-right">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<tr class="hover:bg-[#F1F5F9] transition-colors">
+<td class="p-md text-on-surface-variant">Oct 24, 13:59:00</td>
+<td class="p-md font-medium">192.168.1.200</td>
+<td class="p-md">Privilege Escalation Attempt</td>
+<td class="p-md">
+<span class="px-2 py-1 bg-[#ffdad6] text-[#93000a] text-[10px] font-bold rounded-full uppercase tracking-wide">Critical</span>
+</td>
+<td class="p-md text-right">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // Chart.js Configuration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Line Chart: Trends
+            const ctxTrends = document.getElementById('trendsChart').getContext('2d');
+            new Chart(ctxTrends, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Total Detections',
+                        data: [65, 59, 80, 81, 56, 55, 40],
+                        borderColor: '#1565c0', // primary-container
+                        backgroundColor: 'rgba(21, 101, 192, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'High Risk',
+                        data: [28, 48, 40, 19, 86, 27, 90],
+                        borderColor: '#ba1a1a', // error
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        tension: 0.4,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { family: 'Inter', size: 12 }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#e5e7eb' }, // outline-variant approx
+                            ticks: { font: { family: 'Inter', size: 12 } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { family: 'Inter', size: 12 } }
+                        }
+                    }
+                }
+            });
+
+            // Pie Chart: Risk Distribution
+            const ctxPie = document.getElementById('riskPieChart').getContext('2d');
+            new Chart(ctxPie, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Low Risk', 'Medium Risk', 'High Risk'],
+                    datasets: [{
+                        data: [300, 50, 100],
+                        backgroundColor: [
+                            '#a0f399', // secondary-container
+                            '#ffb957', // tertiary-fixed-dim
+                            '#ba1a1a'  // error
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                font: { family: 'Inter', size: 12 }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body></html>

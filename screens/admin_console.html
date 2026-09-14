@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>SafeSignal Admin Moderation Console</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+                rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet" />
+        <script id="tailwind-config">
+                tailwind.config = {
+                        darkMode: "class",
+                        theme: {
+                                extend: {
+                                        "colors": {
+                                                "on-secondary-fixed": "#002204",
+                                                "on-tertiary-container": "#ffe0bb",
+                                                "inverse-primary": "#a9c7ff",
+                                                "on-background": "#141b2b",
+                                                "on-error-container": "#93000a",
+                                                "surface-tint": "#005db7",
+                                                "secondary": "#1b6d24",
+                                                "background": "#f9f9ff",
+                                                "surface-variant": "#dce2f7",
+                                                "error-container": "#ffdad6",
+                                                "on-primary-fixed": "#001b3d",
+                                                "surface-container-high": "#e1e8fd",
+                                                "tertiary-fixed-dim": "#ffb957",
+                                                "outline": "#727783",
+                                                "on-secondary-container": "#217128",
+                                                "secondary-container": "#a0f399",
+                                                "surface-container-lowest": "#ffffff",
+                                                "secondary-fixed-dim": "#88d982",
+                                                "on-secondary": "#ffffff",
+                                                "on-primary-container": "#dae5ff",
+                                                "primary-container": "#1565c0",
+                                                "on-tertiary": "#ffffff",
+                                                "surface-dim": "#d3daef",
+                                                "on-primary-fixed-variant": "#00468c",
+                                                "primary": "#004d99",
+                                                "on-surface": "#141b2b",
+                                                "tertiary": "#6d4500",
+                                                "on-secondary-fixed-variant": "#005312",
+                                                "on-tertiary-fixed-variant": "#643f00",
+                                                "tertiary-container": "#8e5b00",
+                                                "tertiary-fixed": "#ffddb5",
+                                                "surface-bright": "#f9f9ff",
+                                                "inverse-surface": "#293040",
+                                                "on-error": "#ffffff",
+                                                "surface": "#f9f9ff",
+                                                "primary-fixed-dim": "#a9c7ff",
+                                                "surface-container-highest": "#dce2f7",
+                                                "secondary-fixed": "#a3f69c",
+                                                "on-primary": "#ffffff",
+                                                "outline-variant": "#c2c6d4",
+                                                "on-surface-variant": "#424752",
+                                                "surface-container": "#e9edff",
+                                                "error": "#ba1a1a",
+                                                "surface-container-low": "#f1f3ff",
+                                                "primary-fixed": "#d6e3ff",
+                                                "inverse-on-surface": "#edf0ff",
+                                                "on-tertiary-fixed": "#2a1800"
+                                        },
+                                        "borderRadius": {
+                                                "DEFAULT": "0.25rem",
+                                                "lg": "0.5rem",
+                                                "xl": "0.75rem",
+                                                "full": "9999px"
+                                        },
+                                        "spacing": {
+                                                "sm": "8px",
+                                                "gutter": "24px",
+                                                "xs": "4px",
+                                                "margin-desktop": "32px",
+                                                "base": "8px",
+                                                "lg": "24px",
+                                                "margin-mobile": "16px",
+                                                "md": "16px",
+                                                "xl": "32px",
+                                                "xxl": "48px",
+                                                "container-max": "1440px"
+                                        },
+                                        "fontFamily": {
+                                                "headline-lg-mobile": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "body-md": [
+                                                        "Inter"
+                                                ],
+                                                "body-lg": [
+                                                        "Inter"
+                                                ],
+                                                "headline-md": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "headline-sm": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "label-lg": [
+                                                        "Inter"
+                                                ],
+                                                "title-md": [
+                                                        "Inter"
+                                                ],
+                                                "headline-lg": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "label-md": [
+                                                        "Inter"
+                                                ],
+                                                "title-lg": [
+                                                        "Inter"
+                                                ],
+                                                "display-lg": [
+                                                        "Plus Jakarta Sans"
+                                                ]
+                                        },
+                                        "fontSize": {
+                                                "headline-lg-mobile": [
+                                                        "28px",
+                                                        {
+                                                                "lineHeight": "36px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "body-md": [
+                                                        "14px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "letterSpacing": "0.25px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "body-lg": [
+                                                        "16px",
+                                                        {
+                                                                "lineHeight": "24px",
+                                                                "letterSpacing": "0.5px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "headline-md": [
+                                                        "28px",
+                                                        {
+                                                                "lineHeight": "36px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "headline-sm": [
+                                                        "24px",
+                                                        {
+                                                                "lineHeight": "32px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "label-lg": [
+                                                        "14px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "letterSpacing": "0.1px",
+                                                                "fontWeight": "500"
+                                                        }
+                                                ],
+                                                "title-md": [
+                                                        "16px",
+                                                        {
+                                                                "lineHeight": "24px",
+                                                                "letterSpacing": "0.15px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "headline-lg": [
+                                                        "32px",
+                                                        {
+                                                                "lineHeight": "40px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "label-md": [
+                                                        "12px",
+                                                        {
+                                                                "lineHeight": "16px",
+                                                                "letterSpacing": "0.5px",
+                                                                "fontWeight": "500"
+                                                        }
+                                                ],
+                                                "title-lg": [
+                                                        "22px",
+                                                        {
+                                                                "lineHeight": "28px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "display-lg": [
+                                                        "57px",
+                                                        {
+                                                                "lineHeight": "64px",
+                                                                "letterSpacing": "-0.25px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ]
+                                        }
+                                },
+                        },
+                }
+        </script>
+</head>
+
+<body class="flex md:flex-row flex-col bg-background min-h-screen font-body-md text-on-surface">
+        <!-- TopNav for Mobile -->
+        <header
+                class="md:hidden top-0 z-50 sticky flex justify-between items-center bg-surface shadow-sm px-gutter border-b border-outline-variant w-full h-16">
+                <div class="font-headline-sm font-bold text-headline-sm text-primary">SafeSignal</div>
+                <div class="flex items-center gap-sm">
+                        <button
+                                class="hover:bg-surface-container p-2 rounded-full text-on-surface-variant transition-colors">
+                                <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+                        </button>
+                        <button
+                                class="hover:bg-surface-container p-2 rounded-full text-on-surface-variant transition-colors">
+                                <span class="material-symbols-outlined" data-icon="menu">menu</span>
+                        </button>
+                </div>
+        </header>
+        <!-- SideNavBar (Desktop) -->
+        <nav
+                class="hidden top-0 sticky lg:flex flex-col flex-shrink-0 bg-surface-container-low py-md border-r border-outline-variant w-64 h-screen">
+                <div class="flex items-center gap-sm mb-lg px-gutter">
+                        <div
+                                class="flex justify-center items-center bg-primary-container rounded-full w-10 h-10 text-on-primary-container">
+                                <span class="material-symbols-outlined" data-icon="shield">shield</span>
+                        </div>
+                        <div>
+                                <h1 class="font-title-lg font-black text-primary text-title-lg">SafeSignal Admin</h1>
+                                <p class="font-label-md text-label-md text-on-surface-variant">Vigilance Portal</p>
+                        </div>
+                </div>
+                <div class="mb-md px-gutter">
+                        <button
+                                class="flex justify-center items-center gap-2 bg-primary hover:shadow-md px-4 py-2 rounded-lg w-full text-on-primary transition-all">
+                                <span class="text-sm material-symbols-outlined" data-icon="add">add</span>
+                                <span class="font-label-lg text-label-lg">New Investigation</span>
+                        </button>
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                        <ul class="space-y-1">
+                                <li>
+                                        <a class="flex items-center gap-3 hover:bg-surface-variant mx-2 my-1 px-4 py-2 rounded-full text-on-surface-variant transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined"
+                                                        data-icon="dashboard">dashboard</span>
+                                                <span class="font-label-md text-label-md">Overview</span>
+                                        </a>
+                                </li>
+                                <li>
+                                        <a class="flex items-center gap-3 bg-primary-container mx-2 my-1 px-4 py-2 rounded-full font-bold text-on-primary-container scale-95 transition-transform"
+                                                href="#">
+                                                <span class="material-symbols-outlined"
+                                                        data-icon="report_problem">report_problem</span>
+                                                <span class="font-label-md text-label-md">Pending Reports</span>
+                                        </a>
+                                </li>
+                                <li>
+                                        <a class="flex items-center gap-3 hover:bg-surface-variant mx-2 my-1 px-4 py-2 rounded-full text-on-surface-variant transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined"
+                                                        data-icon="security">security</span>
+                                                <span class="font-label-md text-label-md">Threat Intelligence</span>
+                                        </a>
+                                </li>
+                                <li>
+                                        <a class="flex items-center gap-3 hover:bg-surface-variant mx-2 my-1 px-4 py-2 rounded-full text-on-surface-variant transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined"
+                                                        data-icon="analytics">analytics</span>
+                                                <span class="font-label-md text-label-md">Network Analytics</span>
+                                        </a>
+                                </li>
+                                <li>
+                                        <a class="flex items-center gap-3 hover:bg-surface-variant mx-2 my-1 px-4 py-2 rounded-full text-on-surface-variant transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined"
+                                                        data-icon="history">history</span>
+                                                <span class="font-label-md text-label-md">Audit Logs</span>
+                                        </a>
+                                </li>
+                                <li>
+                                        <a class="flex items-center gap-3 hover:bg-surface-variant mx-2 my-1 px-4 py-2 rounded-full text-on-surface-variant transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined"
+                                                        data-icon="admin_panel_settings">admin_panel_settings</span>
+                                                <span class="font-label-md text-label-md">System Admin</span>
+                                        </a>
+                                </li>
+                        </ul>
+                </div>
+                <div class="mt-auto px-gutter py-4 border-t border-outline-variant">
+                        <ul class="space-y-1">
+                                <li>
+                                        <a class="flex items-center gap-3 hover:bg-surface-variant mx-2 my-1 px-4 py-2 rounded-full text-on-surface-variant transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined" data-icon="help">help</span>
+                                                <span class="font-label-md text-label-md">Help Center</span>
+                                        </a>
+                                </li>
+                                <li>
+                                        <a class="flex items-center gap-3 hover:bg-surface-variant mx-2 my-1 px-4 py-2 rounded-full text-on-surface-variant transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined" data-icon="logout">logout</span>
+                                                <span class="font-label-md text-label-md">Logout</span>
+                                        </a>
+                                </li>
+                        </ul>
+                </div>
+        </nav>
+        <!-- Main Content Area -->
+        <main class="flex flex-col flex-1 mx-auto w-full max-w-container-max overflow-x-hidden">
+                <div class="space-y-xl px-gutter py-margin-desktop w-full">
+                        <!-- Page Header -->
+                        <div class="flex md:flex-row flex-col justify-between md:items-center gap-md">
+                                <div>
+                                        <h2 class="hidden md:block font-headline-lg text-headline-lg text-on-surface">
+                                                Moderation Console</h2>
+                                        <h2
+                                                class="md:hidden font-headline-lg-mobile text-headline-lg-mobile text-on-surface">
+                                                Moderation Console</h2>
+                                        <p class="mt-1 font-body-md text-body-md text-on-surface-variant">Review and
+                                                action pending fraud reports.</p>
+                                </div>
+                                <div class="flex items-center gap-sm">
+                                        <div class="relative">
+                                                <span class="top-1/2 left-3 absolute text-outline -translate-y-1/2 material-symbols-outlined"
+                                                        data-icon="search">search</span>
+                                                <input class="bg-surface-container-lowest py-2 pr-4 pl-10 border focus:border-primary rounded-lg border-outline-variant focus:outline-none focus:ring-1 focus:ring-primary w-full md:w-64 font-body-md text-body-md transition-shadow"
+                                                        placeholder="Search reports..." type="text" />
+                                        </div>
+                                        <button
+                                                class="bg-surface-container-lowest hover:bg-surface-container p-2 border rounded-lg border-outline-variant text-on-surface-variant transition-colors">
+                                                <span class="material-symbols-outlined"
+                                                        data-icon="filter_list">filter_list</span>
+                                        </button>
+                                </div>
+                        </div>
+                        <!-- System Health Bento Grid -->
+                        <section class="gap-md grid grid-cols-1 md:grid-cols-3">
+                                <!-- API Status Card -->
+                                <div
+                                        class="flex flex-col justify-between bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover:shadow-md p-lg border rounded-[20px] border-outline-variant transition-shadow">
+                                        <div class="flex justify-between items-start mb-4">
+                                                <div class="flex items-center gap-2">
+                                                        <div
+                                                                class="flex justify-center items-center bg-secondary-container rounded-full w-8 h-8 text-on-secondary-container">
+                                                                <span class="text-sm material-symbols-outlined"
+                                                                        data-icon="api">api</span>
+                                                        </div>
+                                                        <span class="font-title-md text-on-surface text-title-md">API
+                                                                Status</span>
+                                                </div>
+                                                <span
+                                                        class="inline-flex items-center gap-1 bg-[#E8F5E9] px-2 py-1 rounded-full font-label-md text-[#1B5E20] text-label-md">
+                                                        <span class="bg-[#4CAF50] rounded-full w-2 h-2"></span> Active
+                                                </span>
+                                        </div>
+                                        <div>
+                                                <div class="font-headline-sm text-headline-sm text-on-surface">99.9%
+                                                </div>
+                                                <div class="font-body-md text-body-md text-on-surface-variant">Uptime
+                                                        (Last 24h)</div>
+                                        </div>
+                                </div>
+                                <!-- Database Status Card -->
+                                <div
+                                        class="flex flex-col justify-between bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover:shadow-md p-lg border rounded-[20px] border-outline-variant transition-shadow">
+                                        <div class="flex justify-between items-start mb-4">
+                                                <div class="flex items-center gap-2">
+                                                        <div
+                                                                class="flex justify-center items-center bg-surface-container-high rounded-full w-8 h-8 text-on-surface-variant">
+                                                                <span class="text-sm material-symbols-outlined"
+                                                                        data-icon="database">database</span>
+                                                        </div>
+                                                        <span
+                                                                class="font-title-md text-on-surface text-title-md">Database</span>
+                                                </div>
+                                                <span
+                                                        class="inline-flex items-center gap-1 bg-[#E8F5E9] px-2 py-1 rounded-full font-label-md text-[#1B5E20] text-label-md">
+                                                        <span class="bg-[#4CAF50] rounded-full w-2 h-2"></span> Healthy
+                                                </span>
+                                        </div>
+                                        <div>
+                                                <div class="font-headline-sm text-headline-sm text-on-surface">12ms
+                                                </div>
+                                                <div class="font-body-md text-body-md text-on-surface-variant">Avg
+                                                        Latency</div>
+                                        </div>
+                                </div>
+                                <!-- ML Model Card -->
+                                <div
+                                        class="flex flex-col justify-between bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] hover:shadow-md p-lg border rounded-[20px] border-outline-variant transition-shadow">
+                                        <div class="flex justify-between items-start mb-4">
+                                                <div class="flex items-center gap-2">
+                                                        <div
+                                                                class="flex justify-center items-center bg-primary-container rounded-full w-8 h-8 text-on-primary-container">
+                                                                <span class="text-sm material-symbols-outlined"
+                                                                        data-icon="psychology">psychology</span>
+                                                        </div>
+                                                        <span class="font-title-md text-on-surface text-title-md">ML
+                                                                Engine</span>
+                                                </div>
+                                                <span
+                                                        class="bg-primary-fixed px-2 py-1 rounded-full font-label-md text-label-md text-primary">v4.2</span>
+                                        </div>
+                                        <div>
+                                                <div class="font-headline-sm text-headline-sm text-on-surface">94.2%
+                                                </div>
+                                                <div class="font-body-md text-body-md text-on-surface-variant">
+                                                        Confidence Score Avg</div>
+                                        </div>
+                                </div>
+                        </section>
+                        <!-- Pending Reports List -->
+                        <section
+                                class="bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border rounded-[20px] border-outline-variant overflow-hidden">
+                                <div
+                                        class="flex justify-between items-center bg-surface-container-lowest px-lg py-4 border-b border-outline-variant">
+                                        <h3 class="font-title-lg text-on-surface text-title-lg">Pending Fraud Reports
+                                        </h3>
+                                        <div class="flex gap-2">
+                                                <span
+                                                        class="inline-flex items-center bg-error-container px-2.5 py-0.5 rounded-full font-label-md text-label-md text-on-error-container">
+                                                        24 High Risk
+                                                </span>
+                                                <button
+                                                        class="font-label-md text-label-md text-primary hover:underline">View
+                                                        All</button>
+                                        </div>
+                                </div>
+                                <div class="overflow-x-auto">
+                                        <table class="w-full text-left border-collapse">
+                                                <thead>
+                                                        <tr
+                                                                class="bg-surface-container-lowest border-b border-outline-variant">
+                                                                <th
+                                                                        class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                                                                        Report ID</th>
+                                                                <th
+                                                                        class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                                                                        Entity</th>
+                                                                <th
+                                                                        class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                                                                        Risk Score</th>
+                                                                <th
+                                                                        class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                                                                        Flags</th>
+                                                                <th
+                                                                        class="px-6 py-3 font-label-md text-label-md text-on-surface-variant text-right uppercase tracking-wider">
+                                                                        Actions</th>
+                                                        </tr>
+                                                </thead>
+                                                <tbody
+                                                        class="divide-outline-variant divide-y font-body-md text-body-md">
+                                                        <!-- Row 1 -->
+                                                        <tr class="group hover:bg-[#F1F5F9] transition-colors">
+                                                                <td
+                                                                        class="px-6 py-4 font-medium text-on-surface whitespace-nowrap">
+                                                                        #REP-8992</td>
+                                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex items-center gap-3">
+                                                                                <div
+                                                                                        class="flex justify-center items-center bg-surface-variant rounded-full w-8 h-8 text-on-surface-variant text-xs">
+                                                                                        U</div>
+                                                                                <div>
+                                                                                        <div
+                                                                                                class="font-medium text-on-surface">
+                                                                                                User_77X9</div>
+                                                                                        <div
+                                                                                                class="text-on-surface-variant text-xs">
+                                                                                                Suspicious Login</div>
+                                                                                </div>
+                                                                        </div>
+                                                                </td>
+                                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex items-center gap-2">
+                                                                                <div
+                                                                                        class="bg-surface-variant rounded-full w-16 w-full h-1.5">
+                                                                                        <div class="bg-error rounded-full h-1.5"
+                                                                                                style="width: 92%">
+                                                                                        </div>
+                                                                                </div>
+                                                                                <span
+                                                                                        class="font-bold text-error">92</span>
+                                                                        </div>
+                                                                </td>
+                                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex gap-1">
+                                                                                <span
+                                                                                        class="bg-error-container px-2 py-0.5 border border-[#FCA5A5] rounded-full font-medium text-[10px] text-on-error-container">Geo-Anomaly</span>
+                                                                                <span
+                                                                                        class="bg-surface-container-high px-2 py-0.5 border rounded-full border-outline-variant font-medium text-[10px] text-on-surface-variant">Velocity</span>
+                                                                        </div>
+                                                                </td>
+                                                                <td class="px-6 py-4 text-right whitespace-nowrap">
+                                                                        <div
+                                                                                class="flex justify-end gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                                <button
+                                                                                        class="flex items-center gap-1 hover:bg-[#E8F5E9] px-3 py-1.5 border border-[#4CAF50] rounded-lg font-label-md text-[#2E7D32] text-label-md transition-colors">
+                                                                                        <span class="text-sm material-symbols-outlined"
+                                                                                                data-icon="check">check</span>
+                                                                                        Approve
+                                                                                </button>
+                                                                                <button
+                                                                                        class="flex items-center gap-1 hover:bg-error-container px-3 py-1.5 border border-error rounded-lg font-label-md text-error text-label-md transition-colors">
+                                                                                        <span class="text-sm material-symbols-outlined"
+                                                                                                data-icon="close">close</span>
+                                                                                        Reject
+                                                                                </button>
+                                                                        </div>
+                                                                </td>
+                                                        </tr>
+                                                        <!-- Row 2 -->
+                                                        <tr class="group hover:bg-[#F1F5F9] transition-colors">
+                                                                <td
+                                                                        class="px-6 py-4 font-medium text-on-surface whitespace-nowrap">
+                                                                        #REP-8991</td>
+                                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex items-center gap-3">
+                                                                                <div
+                                                                                        class="flex justify-center items-center bg-surface-variant rounded-full w-8 h-8 text-on-surface-variant text-xs">
+                                                                                        M</div>
+                                                                                <div>
+                                                                                        <div
+                                                                                                class="font-medium text-on-surface">
+                                                                                                Merch_TechCorp</div>
+                                                                                        <div
+                                                                                                class="text-on-surface-variant text-xs">
+                                                                                                High Chargeback Rate
+                                                                                        </div>
+                                                                                </div>
+                                                                        </div>
+                                                                </td>
+                                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex items-center gap-2">
+                                                                                <div
+                                                                                        class="bg-surface-variant rounded-full w-16 w-full h-1.5">
+                                                                                        <div class="bg-[#F59E0B] rounded-full h-1.5"
+                                                                                                style="width: 78%">
+                                                                                        </div>
+                                                                                </div>
+                                                                                <span
+                                                                                        class="font-bold text-[#D97706]">78</span>
+                                                                        </div>
+                                                                </td>
+                                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex gap-1">
+                                                                                <span
+                                                                                        class="bg-[#FEF3C7] px-2 py-0.5 border border-[#FCD34D] rounded-full font-medium text-[#92400E] text-[10px]">Disputes</span>
+                                                                        </div>
+                                                                </td>
+                                                                <td class="px-6 py-4 text-right whitespace-nowrap">
+                                                                        <div
+                                                                                class="flex justify-end gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                                <button
+                                                                                        class="flex items-center gap-1 hover:bg-[#E8F5E9] px-3 py-1.5 border border-[#4CAF50] rounded-lg font-label-md text-[#2E7D32] text-label-md transition-colors">
+                                                                                        <span class="text-sm material-symbols-outlined"
+                                                                                                data-icon="check">check</span>
+                                                                                        Approve
+                                                                                </button>
+                                                                                <button
+                                                                                        class="flex items-center gap-1 hover:bg-error-container px-3 py-1.5 border border-error rounded-lg font-label-md text-error text-label-md transition-colors">
+                                                                                        <span class="text-sm material-symbols-outlined"
+                                                                                                data-icon="close">close</span>
+                                                                                        Reject
+                                                                                </button>
+                                                                        </div>
+                                                                </td>
+                                                        </tr>
+                                                        <!-- Row 3 -->
+                                                        <tr class="group hover:bg-[#F1F5F9] transition-colors">
+                                                                <td
+                                                                        class="px-6 py-4 font-medium text-on-surface whitespace-nowrap">
+                                                                        #REP-8990</td>
+                                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex items-center gap-3">
+                                                                                <div
+                                                                                        class="flex justify-center items-center bg-surface-variant rounded-full w-8 h-8 text-on-surface-variant text-xs">
+                                                                                        T</div>
+                                                                                <div>
+                                                                                        <div
+                                                                                                class="font-medium text-on-surface">
+                                                                                                Txn_9921A</div>
+                                                                                        <div
+                                                                                                class="text-on-surface-variant text-xs">
+                                                                                                Value Mismatch</div>
+                                                                                </div>
+                                                                        </div>
+                                                                </td>
+                                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex items-center gap-2">
+                                                                                <div
+                                                                                        class="bg-surface-variant rounded-full w-16 w-full h-1.5">
+                                                                                        <div class="bg-error rounded-full h-1.5"
+                                                                                                style="width: 88%">
+                                                                                        </div>
+                                                                                </div>
+                                                                                <span
+                                                                                        class="font-bold text-error">88</span>
+                                                                        </div>
+                                                                </td>
+                                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                                        <div class="flex gap-1">
+                                                                                <span
+                                                                                        class="bg-error-container px-2 py-0.5 border border-[#FCA5A5] rounded-full font-medium text-[10px] text-on-error-container">Value
+                                                                                        Anomaly</span>
+                                                                                <span
+                                                                                        class="bg-surface-container-high px-2 py-0.5 border rounded-full border-outline-variant font-medium text-[10px] text-on-surface-variant">New
+                                                                                        Device</span>
+                                                                        </div>
+                                                                </td>
+                                                                <td class="px-6 py-4 text-right whitespace-nowrap">
+                                                                        <div
+                                                                                class="flex justify-end gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                                <button
+                                                                                        class="flex items-center gap-1 hover:bg-[#E8F5E9] px-3 py-1.5 border border-[#4CAF50] rounded-lg font-label-md text-[#2E7D32] text-label-md transition-colors">
+                                                                                        <span class="text-sm material-symbols-outlined"
+                                                                                                data-icon="check">check</span>
+                                                                                        Approve
+                                                                                </button>
+                                                                                <button
+                                                                                        class="flex items-center gap-1 hover:bg-error-container px-3 py-1.5 border border-error rounded-lg font-label-md text-error text-label-md transition-colors">
+                                                                                        <span class="text-sm material-symbols-outlined"
+                                                                                                data-icon="close">close</span>
+                                                                                        Reject
+                                                                                </button>
+                                                                        </div>
+                                                                </td>
+                                                        </tr>
+                                                </tbody>
+                                        </table>
+                                </div>
+                                <div
+                                        class="flex justify-between items-center bg-surface-container-lowest px-lg py-3 border-t border-outline-variant">
+                                        <span class="text-label-md text-on-surface-variant">Showing 1-3 of 24
+                                                pending</span>
+                                        <div class="flex gap-1">
+                                                <button class="hover:bg-surface-container disabled:opacity-50 p-1 rounded text-on-surface-variant"
+                                                        disabled="">
+                                                        <span class="text-sm material-symbols-outlined"
+                                                                data-icon="chevron_left">chevron_left</span>
+                                                </button>
+                                                <button
+                                                        class="hover:bg-surface-container p-1 rounded text-on-surface-variant">
+                                                        <span class="text-sm material-symbols-outlined"
+                                                                data-icon="chevron_right">chevron_right</span>
+                                                </button>
+                                        </div>
+                                </div>
+                        </section>
+                        <!-- Activity Logs Preview (Bento Component) -->
+                        <section
+                                class="bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-lg border rounded-[20px] border-outline-variant">
+                                <div
+                                        class="flex justify-between items-center mb-md pb-2 border-b border-outline-variant">
+                                        <h3 class="font-title-md text-on-surface text-title-md">Recent System Activity
+                                        </h3>
+                                        <button class="font-label-md text-label-md text-primary hover:underline">Full
+                                                Log</button>
+                                </div>
+                                <ul class="space-y-3">
+                                        <li class="flex items-start gap-3">
+                                                <div class="mt-0.5 text-on-surface-variant">
+                                                        <span class="text-sm material-symbols-outlined"
+                                                                data-icon="update">update</span>
+                                                </div>
+                                                <div>
+                                                        <p class="font-body-md text-body-md text-on-surface">Model
+                                                                Weights Updated to <span class="font-bold">v4.2.1</span>
+                                                        </p>
+                                                        <p class="font-label-md text-label-md text-on-surface-variant">
+                                                                System • 2 mins ago</p>
+                                                </div>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                                <div class="mt-0.5 text-primary">
+                                                        <span class="text-sm material-symbols-outlined"
+                                                                data-icon="admin_panel_settings">admin_panel_settings</span>
+                                                </div>
+                                                <div>
+                                                        <p class="font-body-md text-body-md text-on-surface">Analyst
+                                                                <span class="font-bold">J.Doe</span> approved Report
+                                                                #REP-8985</p>
+                                                        <p class="font-label-md text-label-md text-on-surface-variant">
+                                                                Manual Action • 15 mins ago</p>
+                                                </div>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                                <div class="mt-0.5 text-error">
+                                                        <span class="text-sm material-symbols-outlined"
+                                                                data-icon="warning">warning</span>
+                                                </div>
+                                                <div>
+                                                        <p class="font-body-md text-body-md text-on-surface">API Rate
+                                                                Limit Exceeded on Node <span
+                                                                        class="font-bold">US-East-1</span></p>
+                                                        <p class="font-label-md text-label-md text-on-surface-variant">
+                                                                Infrastructure • 1 hour ago</p>
+                                                </div>
+                                        </li>
+                                </ul>
+                        </section>
+                </div>
+        </main>
+        <!-- BottomNav for Mobile -->
+        <nav
+                class="md:hidden bottom-0 z-50 fixed flex justify-around items-center bg-surface shadow-[0_-2px_10px_rgba(0,0,0,0.05)] border-t border-outline-variant w-full h-16">
+                <a class="flex flex-col justify-center items-center w-full h-full text-on-surface-variant hover:text-primary transition-colors"
+                        href="#">
+                        <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                        <span class="mt-1 font-medium text-[10px]">Overview</span>
+                </a>
+                <a class="flex flex-col justify-center items-center w-full h-full font-bold text-primary" href="#">
+                        <div class="bg-primary-container mb-1 px-4 py-1 rounded-full text-on-primary-container">
+                                <span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
+                        </div>
+                        <span class="font-bold text-[10px]">Reports</span>
+                </a>
+                <a class="flex flex-col justify-center items-center w-full h-full text-on-surface-variant hover:text-primary transition-colors"
+                        href="#">
+                        <span class="material-symbols-outlined" data-icon="security">security</span>
+                        <span class="mt-1 font-medium text-[10px]">Threats</span>
+                </a>
+                <a class="flex flex-col justify-center items-center w-full h-full text-on-surface-variant hover:text-primary transition-colors"
+                        href="#">
+                        <span class="material-symbols-outlined"
+                                data-icon="admin_panel_settings">admin_panel_settings</span>
+                        <span class="mt-1 font-medium text-[10px]">Admin</span>
+                </a>
+        </nav>
+</body>
+
+</html>

@@ -1,0 +1,180 @@
+rules_version = '2';
+
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║   SafeSignal — Firestore Security Rules                                      ║
+// ║   Version: 1.0.0                                                             ║
+// ║                                                                              ║
+// ║   Role hierarchy (stored in Firebase Auth custom claims):                    ║
+// ║     ADMIN > MODERATOR > USER                                                 ║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper Functions ───────────────────────────────────────────────────────
+
+    /** Returns true if the request is authenticated */
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    /** Returns the caller's UID */
+    function uid() {
+      return request.auth.uid;
+    }
+
+    /** Returns the caller's role from custom claims (defaults to USER) */
+    function role() {
+      return request.auth.token.get('role', 'USER');
+    }
+
+    /** Returns true if the caller has ADMIN role */
+    function isAdmin() {
+      return isAuthenticated() && role() == 'ADMIN';
+    }
+
+    /** Returns true if the caller has MODERATOR or higher */
+    function isModerator() {
+      return isAuthenticated() && role() in ['MODERATOR', 'ADMIN'];
+    }
+
+    /** Returns true if the caller owns the document (by UID match) */
+    function isOwner(userId) {
+      return isAuthenticated() && uid() == userId;
+    }
+
+    /** Returns true if the caller's account is not blocked */
+    function isActive() {
+      return isAuthenticated() &&
+             get(/databases/$(database)/documents/users/$(uid())).data.status == 'ACTIVE';
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTION: users
+    //   - Users can read and update their own profile only
+    //   - Admins have full access
+    //   - No user can promote themselves (role is server-controlled)
+    // ─────────────────────────────────────────────────────────────────────────
+    match /users/{userId} {
+
+      // Anyone authenticated can read their own profile; admins read all
+      allow read: if isOwner(userId) || isAdmin();
+
+      // Users can create their own profile on first login
+      allow create: if isOwner(userId)
+                    && request.resource.data.role == 'USER'
+                    && request.resource.data.status == 'ACTIVE';
+
+      // Users can update their own profile but cannot change role or status
+      allow update: if (isOwner(userId)
+                        && !('role'   in request.resource.data.diff(resource.data).affectedKeys())
+                        && !('status' in request.resource.data.diff(resource.data).affectedKeys()))
+                    || isAdmin();
+
+      // Only admins can delete users
+      allow delete: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTION: upi_profiles
+    //   - Any authenticated user can READ (needed for risk checks)
+    //   - Only the backend (Admin SDK) writes here — no client writes
+    //   - Admins can write directly for emergency overrides
+    // ─────────────────────────────────────────────────────────────────────────
+    match /upi_profiles/{upiId} {
+      allow read:   if isAuthenticated();
+      allow write:  if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTION: reports
+    //   - Users can CREATE reports (one per UPI ID enforced in backend)
+    //   - Users can READ their own reports
+    //   - Moderators can READ all reports and UPDATE status
+    //   - Admins have full access
+    // ─────────────────────────────────────────────────────────────────────────
+    match /reports/{reportId} {
+
+      // Read: own reports for users; all reports for moderators+
+      allow read: if isAuthenticated()
+                  && (resource.data.reporterUid == uid() || isModerator());
+
+      // Create: authenticated active users only
+      allow create: if isActive()
+                    && request.resource.data.reporterUid == uid()
+                    && request.resource.data.status == 'PENDING';
+
+      // Update: moderators can update status; users cannot modify after submission
+      allow update: if isModerator();
+
+      // Delete: admins only
+      allow delete: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTION: check_history
+    //   - Users can read their own history
+    //   - Backend writes all check history (Admin SDK)
+    //   - Admins read all
+    // ─────────────────────────────────────────────────────────────────────────
+    match /check_history/{historyId} {
+      allow read:   if isAuthenticated()
+                    && (resource.data.userId == uid() || isAdmin());
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTION: analytics
+    //   - Moderators and admins can READ (for dashboard)
+    //   - Only admins and backend (Admin SDK) can WRITE
+    // ─────────────────────────────────────────────────────────────────────────
+    match /analytics/{dateId} {
+      allow read:  if isModerator();
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTION: device_reputation
+    //   - No client reads or writes — backend only via Admin SDK
+    //   - Admins can inspect
+    // ─────────────────────────────────────────────────────────────────────────
+    match /device_reputation/{deviceHash} {
+      allow read:  if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTION: ml_metadata
+    //   - Admin read only — backend writes via Admin SDK
+    // ─────────────────────────────────────────────────────────────────────────
+    match /ml_metadata/{docId} {
+      allow read:  if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTION: system_config
+    //   - Admin only — never exposed to regular users
+    // ─────────────────────────────────────────────────────────────────────────
+    match /system_config/{configId} {
+      allow read:  if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTION: audit_logs
+    //   - Admin read only — append-only via Admin SDK
+    //   - No client writes ever
+    // ─────────────────────────────────────────────────────────────────────────
+    match /audit_logs/{logId} {
+      allow read:   if isAdmin();
+      allow write:  if false; // Backend Admin SDK only — never from clients
+    }
+
+    // ── Deny all unmatched paths ───────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

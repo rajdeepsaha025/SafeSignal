@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>SafeSignal - Check UPI Fraud Instantly</title>
+        <!-- Material Symbols Outlined -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet" />
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap"
+                rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet" />
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script id="tailwind-config">
+                tailwind.config = {
+                        darkMode: "class",
+                        theme: {
+                                extend: {
+                                        "colors": {
+                                                "on-secondary-fixed": "#002204",
+                                                "on-tertiary-container": "#ffe0bb",
+                                                "inverse-primary": "#a9c7ff",
+                                                "on-background": "#141b2b",
+                                                "on-error-container": "#93000a",
+                                                "surface-tint": "#005db7",
+                                                "secondary": "#1b6d24",
+                                                "background": "#f9f9ff",
+                                                "surface-variant": "#dce2f7",
+                                                "error-container": "#ffdad6",
+                                                "on-primary-fixed": "#001b3d",
+                                                "surface-container-high": "#e1e8fd",
+                                                "tertiary-fixed-dim": "#ffb957",
+                                                "outline": "#727783",
+                                                "on-secondary-container": "#217128",
+                                                "secondary-container": "#a0f399",
+                                                "surface-container-lowest": "#ffffff",
+                                                "secondary-fixed-dim": "#88d982",
+                                                "on-secondary": "#ffffff",
+                                                "on-primary-container": "#dae5ff",
+                                                "primary-container": "#1565c0",
+                                                "on-tertiary": "#ffffff",
+                                                "surface-dim": "#d3daef",
+                                                "on-primary-fixed-variant": "#00468c",
+                                                "primary": "#004d99",
+                                                "on-surface": "#141b2b",
+                                                "tertiary": "#6d4500",
+                                                "on-secondary-fixed-variant": "#005312",
+                                                "on-tertiary-fixed-variant": "#643f00",
+                                                "tertiary-container": "#8e5b00",
+                                                "tertiary-fixed": "#ffddb5",
+                                                "surface-bright": "#f9f9ff",
+                                                "inverse-surface": "#293040",
+                                                "on-error": "#ffffff",
+                                                "surface": "#f9f9ff",
+                                                "primary-fixed-dim": "#a9c7ff",
+                                                "surface-container-highest": "#dce2f7",
+                                                "secondary-fixed": "#a3f69c",
+                                                "on-primary": "#ffffff",
+                                                "outline-variant": "#c2c6d4",
+                                                "on-surface-variant": "#424752",
+                                                "surface-container": "#e9edff",
+                                                "error": "#ba1a1a",
+                                                "surface-container-low": "#f1f3ff",
+                                                "primary-fixed": "#d6e3ff",
+                                                "inverse-on-surface": "#edf0ff",
+                                                "on-tertiary-fixed": "#2a1800"
+                                        },
+                                        "borderRadius": {
+                                                "DEFAULT": "0.25rem",
+                                                "lg": "0.5rem",
+                                                "xl": "0.75rem",
+                                                "full": "9999px"
+                                        },
+                                        "spacing": {
+                                                "sm": "8px",
+                                                "gutter": "24px",
+                                                "xs": "4px",
+                                                "margin-desktop": "32px",
+                                                "base": "8px",
+                                                "lg": "24px",
+                                                "margin-mobile": "16px",
+                                                "md": "16px",
+                                                "xl": "32px",
+                                                "xxl": "48px",
+                                                "container-max": "1440px"
+                                        },
+                                        "fontFamily": {
+                                                "headline-lg-mobile": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "body-md": [
+                                                        "Inter"
+                                                ],
+                                                "body-lg": [
+                                                        "Inter"
+                                                ],
+                                                "headline-md": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "headline-sm": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "label-lg": [
+                                                        "Inter"
+                                                ],
+                                                "title-md": [
+                                                        "Inter"
+                                                ],
+                                                "headline-lg": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "label-md": [
+                                                        "Inter"
+                                                ],
+                                                "title-lg": [
+                                                        "Inter"
+                                                ],
+                                                "display-lg": [
+                                                        "Plus Jakarta Sans"
+                                                ]
+                                        },
+                                        "fontSize": {
+                                                "headline-lg-mobile": [
+                                                        "28px",
+                                                        {
+                                                                "lineHeight": "36px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "body-md": [
+                                                        "14px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "letterSpacing": "0.25px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "body-lg": [
+                                                        "16px",
+                                                        {
+                                                                "lineHeight": "24px",
+                                                                "letterSpacing": "0.5px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "headline-md": [
+                                                        "28px",
+                                                        {
+                                                                "lineHeight": "36px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "headline-sm": [
+                                                        "24px",
+                                                        {
+                                                                "lineHeight": "32px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "label-lg": [
+                                                        "14px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "letterSpacing": "0.1px",
+                                                                "fontWeight": "500"
+                                                        }
+                                                ],
+                                                "title-md": [
+                                                        "16px",
+                                                        {
+                                                                "lineHeight": "24px",
+                                                                "letterSpacing": "0.15px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "headline-lg": [
+                                                        "32px",
+                                                        {
+                                                                "lineHeight": "40px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "label-md": [
+                                                        "12px",
+                                                        {
+                                                                "lineHeight": "16px",
+                                                                "letterSpacing": "0.5px",
+                                                                "fontWeight": "500"
+                                                        }
+                                                ],
+                                                "title-lg": [
+                                                        "22px",
+                                                        {
+                                                                "lineHeight": "28px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "display-lg": [
+                                                        "57px",
+                                                        {
+                                                                "lineHeight": "64px",
+                                                                "letterSpacing": "-0.25px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ]
+                                        }
+                                },
+                        },
+                }
+        </script>
+        <style>
+                .material-symbols-outlined {
+                        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                }
+
+                .shadow-elevation-1 {
+                        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+                }
+
+                .shadow-elevation-2 {
+                        box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.08);
+                }
+
+                /* Smooth scrolling */
+                html {
+                        scroll-behavior: smooth;
+                }
+
+                /* Hide scrollbar for clean aesthetic */
+                ::-webkit-scrollbar {
+                        width: 8px;
+                }
+
+                ::-webkit-scrollbar-track {
+                        background: #f9f9ff;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                        background: #c2c6d4;
+                        border-radius: 4px;
+                }
+
+                ::-webkit-scrollbar-thumb:hover {
+                        background: #727783;
+                }
+        </style>
+</head>
+
+<body class="bg-background font-body-lg text-on-surface antialiased">
+        <!-- TopNavBar -->
+        <nav
+                class="top-0 z-50 sticky bg-surface dark:bg-inverse-surface dark:border-outline border-b border-outline-variant flat no shadows docked full-width">
+                <div class="flex justify-between items-center mx-auto px-gutter w-full max-w-container-max h-16">
+                        <!-- Brand -->
+                        <div
+                                class="flex items-center gap-sm hover:opacity-80 transition-all duration-150 cursor-pointer">
+                                <span class="text-primary dark:text-inverse-primary material-symbols-outlined"
+                                        data-weight="fill" style="font-variation-settings: 'FILL' 1;">security</span>
+                                <span
+                                        class="font-headline-sm font-bold text-headline-sm text-primary dark:text-inverse-primary">SafeSignal</span>
+                        </div>
+                        <!-- Links (Desktop) -->
+                        <div class="hidden md:flex items-center gap-lg">
+                                <a class="hover:bg-surface-container dark:hover:bg-surface-container-highest px-sm py-xs border-primary border-b-2 font-title-lg font-bold text-primary text-title-lg dark:text-inverse-primary transition-colors"
+                                        href="#">Home</a>
+                                <a class="hover:bg-surface-container dark:hover:bg-surface-container-highest px-sm py-xs font-label-lg text-label-lg text-on-surface-variant dark:text-surface-variant transition-colors"
+                                        href="#">Check UPI</a>
+                                <a class="hover:bg-surface-container dark:hover:bg-surface-container-highest px-sm py-xs font-label-lg text-label-lg text-on-surface-variant dark:text-surface-variant transition-colors"
+                                        href="#">Report Fraud</a>
+                                <a class="hover:bg-surface-container dark:hover:bg-surface-container-highest px-sm py-xs font-label-lg text-label-lg text-on-surface-variant dark:text-surface-variant transition-colors"
+                                        href="#">Analytics</a>
+                                <a class="hover:bg-surface-container dark:hover:bg-surface-container-highest px-sm py-xs font-label-lg text-label-lg text-on-surface-variant dark:text-surface-variant transition-colors"
+                                        href="#">History</a>
+                                <a class="hover:bg-surface-container dark:hover:bg-surface-container-highest px-sm py-xs font-label-lg text-label-lg text-on-surface-variant dark:text-surface-variant transition-colors"
+                                        href="#">Admin</a>
+                        </div>
+                        <!-- Actions -->
+                        <div class="flex items-center gap-md">
+                                <button aria-label="notifications"
+                                        class="hover:bg-surface-container p-xs rounded-full text-on-surface-variant hover:text-primary transition-colors">
+                                        <span class="material-symbols-outlined">notifications</span>
+                                </button>
+                                <button aria-label="settings"
+                                        class="hover:bg-surface-container p-xs rounded-full text-on-surface-variant hover:text-primary transition-colors">
+                                        <span class="material-symbols-outlined">settings</span>
+                                </button>
+                                <div
+                                        class="bg-surface-container-highest hover:opacity-80 ml-sm border rounded-full border-outline-variant w-8 h-8 overflow-hidden transition-all duration-150 cursor-pointer">
+                                        <img alt="Analyst Profile" class="w-full h-full object-cover"
+                                                data-alt="A close-up, high-quality, professional portrait of a security analyst wearing a crisp white shirt and a dark blazer. The lighting is bright and even, set in a modern corporate environment. The overall aesthetic is clean, authoritative, and perfectly aligns with a light-mode enterprise software application palette."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBydVq8_G1JVz7nJ8gwSwgaG_nASZKztnzBvcScAzK_rAp6wWgm9EGgODziFmE9XwUmw_aaJv67mtKZXI46b22qMqG1PI-jFntnR17tbKxpei1heHWWJre2uJIcNz8nanDEW-pVfmYKGojJpP0_zZnqVy2V8iIkszMh2MAUGaI9n_Mst25MhuPcRvyetSZBowRyhe1ADlhxe_6yLDEG0IKyA1GoDSSE7stll-AA-QdkgOqaDNmUfuq-" />
+                                </div>
+                        </div>
+                </div>
+        </nav>
+        <!-- Main Content -->
+        <main>
+                <!-- Hero Section -->
+                <section
+                        class="items-center gap-lg grid grid-cols-1 md:grid-cols-12 mx-auto px-gutter py-xxl md:py-[80px] w-full max-w-container-max min-h-[716px]">
+                        <div class="z-10 flex flex-col gap-lg md:col-span-6">
+                                <div
+                                        class="inline-flex items-center gap-sm bg-error-container px-md py-xs rounded-full w-max font-label-lg text-label-lg text-on-error-container">
+                                        <span class="text-[18px] text-error material-symbols-outlined">warning</span>
+                                        <span>High Risk Alert: UPI Fraud Up 206%</span>
+                                </div>
+                                <h1
+                                        class="font-display-lg text-display-lg text-on-surface leading-tight tracking-tight">
+                                        Check Any UPI <br /> Before Sending <span class="text-primary">Money</span>.
+                                </h1>
+                                <p class="max-w-[90%] font-body-lg text-body-lg text-on-surface-variant">
+                                        AI-powered fraud intelligence using machine learning, verified community reports
+                                        and trusted threat databases. Instantly verify the safety of any UPI ID, phone
+                                        number, or VPA.
+                                </p>
+                                <div class="flex sm:flex-row flex-col gap-md mt-sm">
+                                        <!-- Search Input group mimicking CTA -->
+                                        <div
+                                                class="flex flex-1 bg-surface-container-lowest shadow-elevation-1 border focus-within:border-primary rounded-lg border-outline-variant focus-within:ring-1 focus-within:ring-primary max-w-md overflow-hidden transition-all">
+                                                <div class="flex items-center pl-md text-outline">
+                                                        <span class="material-symbols-outlined">search</span>
+                                                </div>
+                                                <input class="bg-transparent px-sm py-md border-none placeholder-outline-variant focus:ring-0 w-full text-body-lg text-on-surface"
+                                                        placeholder="Enter UPI ID (e.g. name@bank)" type="text" />
+                                                <button
+                                                        class="bg-primary-container hover:opacity-90 m-xs px-lg py-sm rounded font-label-lg font-medium text-label-lg text-on-primary-container transition-opacity">
+                                                        Check UPI
+                                                </button>
+                                        </div>
+                                </div>
+                                <div
+                                        class="flex items-center gap-md mt-sm font-body-md text-body-md text-on-surface-variant">
+                                        <div class="flex -space-x-2">
+                                                <div
+                                                        class="z-30 bg-surface-container border border-surface-container-lowest rounded-full w-6 h-6">
+                                                </div>
+                                                <div
+                                                        class="z-20 bg-surface-variant border border-surface-container-lowest rounded-full w-6 h-6">
+                                                </div>
+                                                <div
+                                                        class="z-10 bg-primary-container border border-surface-container-lowest rounded-full w-6 h-6">
+                                                </div>
+                                        </div>
+                                        <span>Trusted by 50,000+ investigators</span>
+                                </div>
+                        </div>
+                        <div
+                                class="relative flex justify-center items-center md:col-span-6 rounded-xl h-[400px] md:h-[600px] overflow-hidden">
+                                <!-- Decorative abstract background element -->
+                                <div
+                                        class="to-primary-fixed absolute inset-0 bg-gradient-to-tr from-surface-container-low opacity-50 rounded-[40px]">
+                                </div>
+                                <div
+                                        class="z-10 relative bg-surface-container-lowest shadow-elevation-2 border rounded-2xl border-outline-variant w-full max-w-[500px] aspect-square overflow-hidden">
+                                        <img class="w-full h-full object-cover"
+                                                data-alt="A highly detailed, professional 3D illustration of a glowing shield intertwined with digital network nodes and data streams. The aesthetic is clean, corporate, and high-tech, utilizing a palette of crisp whites, subtle grays, and authoritative deep blues. The lighting is bright and studio-quality, conveying trust, cybersecurity, and enterprise-grade intelligence in a light-mode environment."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA186Lprklxmi0u5lhMBUkp4BuEgVHsFoSIuSs-awxjxUQNJqGN_GKcBbscWNckV391Y20_dZJemfTflRg-EV7mTKA9S00cLHw9p2kGAcEqyjRt1nD4dsT4_IOdR4wH9dB1BjZSxOXrdYRJOGdqvRt0eE-yaGyhifq25XVnWqIcnLzhvaNN5Z80iMxsu_DaemX8edcA4b0f0dZQiU_wKFFB3oSJ_LAJq7MgFMymrT4tFYN0g-_iaaQL" />
+                                </div>
+                                <!-- Floating glassmorphism cards -->
+                                <div class="bottom-[10%] left-0 z-20 absolute flex items-center gap-sm bg-surface-container-lowest/90 shadow-elevation-1 backdrop-blur-md p-sm border rounded-lg border-outline-variant animate-bounce"
+                                        style="animation-duration: 3s;">
+                                        <div
+                                                class="flex justify-center items-center bg-error-container rounded-full w-8 h-8 text-on-error-container">
+                                                <span class="text-[16px] material-symbols-outlined">close</span>
+                                        </div>
+                                        <div>
+                                                <div class="font-label-md text-label-md text-on-surface-variant">Fraud
+                                                        Detected</div>
+                                                <div class="font-title-md text-on-surface text-title-md">98% Risk Score
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="top-[20%] right-[-5%] z-20 absolute flex items-center gap-sm bg-surface-container-lowest/90 shadow-elevation-1 backdrop-blur-md p-sm border rounded-lg border-outline-variant animate-pulse"
+                                        style="animation-duration: 4s;">
+                                        <div
+                                                class="flex justify-center items-center bg-secondary-container rounded-full w-8 h-8 text-on-secondary-container">
+                                                <span class="text-[16px] material-symbols-outlined">check</span>
+                                        </div>
+                                        <div>
+                                                <div class="font-label-md text-label-md text-on-surface-variant">VPA
+                                                        Verified</div>
+                                                <div class="font-title-md text-on-surface text-title-md">Safe Transfer
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+                <!-- Stats Section -->
+                <section class="bg-surface-container-low py-xl border-y border-outline-variant">
+                        <div class="mx-auto px-gutter max-w-container-max">
+                                <div
+                                        class="gap-lg grid grid-cols-1 md:grid-cols-3 divide-outline-variant md:divide-x divide-y md:divide-y-0">
+                                        <div
+                                                class="flex flex-col justify-center items-center py-md md:py-0 text-center">
+                                                <span class="font-display-lg text-display-lg text-primary">₹22,495
+                                                        Cr</span>
+                                                <span class="mt-xs font-title-md text-on-surface-variant text-title-md">Total
+                                                        Digital Fraud Losses</span>
+                                        </div>
+                                        <div
+                                                class="flex flex-col justify-center items-center py-md md:py-0 text-center">
+                                                <span class="font-display-lg text-display-lg text-error">206%</span>
+                                                <span class="mt-xs font-title-md text-on-surface-variant text-title-md">YoY
+                                                        Growth in UPI Scams</span>
+                                        </div>
+                                        <div
+                                                class="flex flex-col justify-center items-center py-md md:py-0 text-center">
+                                                <span class="font-display-lg text-display-lg text-on-surface">805
+                                                        Cr</span>
+                                                <span class="mt-xs font-title-md text-on-surface-variant text-title-md">UPI
+                                                        Fraud Transactions Flagged</span>
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+                <!-- Features Bento Grid -->
+                <section class="mx-auto px-gutter py-xxl max-w-container-max">
+                        <div class="mb-xl text-center">
+                                <h2 class="mb-sm font-headline-lg text-headline-lg text-on-surface">Comprehensive Threat
+                                        Intelligence</h2>
+                                <p class="mx-auto max-w-2xl font-body-lg text-body-lg text-on-surface-variant">Our
+                                        multi-layered detection engine analyzes thousands of data points in milliseconds
+                                        to provide definitive risk assessments.</p>
+                        </div>
+                        <div class="gap-md grid grid-cols-1 md:grid-cols-12 auto-rows-[250px]">
+                                <!-- Feature 1: Large Card -->
+                                <div
+                                        class="group relative flex flex-col justify-between md:col-span-8 bg-surface-container-lowest shadow-elevation-1 hover:shadow-elevation-2 p-lg border rounded-[20px] border-outline-variant overflow-hidden transition-shadow">
+                                        <div class="z-10">
+                                                <div
+                                                        class="flex justify-center items-center bg-primary-container mb-md rounded-full w-12 h-12 text-on-primary-container">
+                                                        <span class="text-[24px] material-symbols-outlined">speed</span>
+                                                </div>
+                                                <h3 class="mb-xs font-headline-sm text-headline-sm text-on-surface">
+                                                        Instant Risk Score</h3>
+                                                <p class="max-w-md font-body-md text-body-md text-on-surface-variant">
+                                                        Get a definitive 0-100 risk score within 200ms. We analyze
+                                                        behavioral patterns, historical velocity, and network
+                                                        associations to flag suspicious VPAs instantly.</p>
+                                        </div>
+                                        <!-- Abstract graphic for bento card -->
+                                        <div
+                                                class="right-0 bottom-0 absolute bg-gradient-to-tl from-surface-container-high to-transparent opacity-50 rounded-tl-full w-2/3 h-1/2 group-hover:scale-105 transition-transform duration-500">
+                                        </div>
+                                </div>
+                                <!-- Feature 2: Small Card -->
+                                <div
+                                        class="group flex flex-col justify-between md:col-span-4 bg-surface-container-lowest shadow-elevation-1 hover:shadow-elevation-2 p-lg border rounded-[20px] border-outline-variant transition-shadow">
+                                        <div>
+                                                <div
+                                                        class="flex justify-center items-center bg-secondary-container mb-md rounded-full w-12 h-12 text-on-secondary-container">
+                                                        <span
+                                                                class="text-[24px] material-symbols-outlined">psychology</span>
+                                                </div>
+                                                <h3 class="mb-xs font-title-lg text-on-surface text-title-lg">Machine
+                                                        Learning</h3>
+                                                <p class="font-body-md text-body-md text-on-surface-variant">Adaptive
+                                                        models trained on thousands of confirmed fraud vectors.</p>
+                                        </div>
+                                </div>
+                                <!-- Feature 3: Small Card -->
+                                <div
+                                        class="group flex flex-col justify-between md:col-span-4 bg-surface-container-lowest shadow-elevation-1 hover:shadow-elevation-2 p-lg border rounded-[20px] border-outline-variant transition-shadow">
+                                        <div>
+                                                <div
+                                                        class="flex justify-center items-center bg-tertiary-container mb-md rounded-full w-12 h-12 text-on-tertiary-container">
+                                                        <span
+                                                                class="text-[24px] material-symbols-outlined">groups</span>
+                                                </div>
+                                                <h3 class="mb-xs font-title-lg text-on-surface text-title-lg">Community
+                                                        Intel</h3>
+                                                <p class="font-body-md text-body-md text-on-surface-variant">
+                                                        Crowdsourced, verified reports from a network of security
+                                                        professionals.</p>
+                                        </div>
+                                </div>
+                                <!-- Feature 4: Large Card -->
+                                <div
+                                        class="group relative flex flex-col justify-between md:col-span-8 bg-surface-container-lowest shadow-elevation-1 hover:shadow-elevation-2 p-lg border rounded-[20px] border-outline-variant overflow-hidden transition-shadow">
+                                        <div class="z-10 flex flex-col justify-end w-full h-full">
+                                                <div
+                                                        class="flex justify-center items-center bg-surface-tint mb-md rounded-full w-12 h-12 text-on-primary">
+                                                        <span
+                                                                class="text-[24px] material-symbols-outlined">account_balance</span>
+                                                </div>
+                                                <h3 class="mb-xs font-headline-sm text-headline-sm text-on-surface">
+                                                        Government Database Sync</h3>
+                                                <p class="max-w-md font-body-md text-body-md text-on-surface-variant">
+                                                        Direct API integration with national cybercrime reporting
+                                                        portals and banking blacklists ensures you are checking against
+                                                        the most authoritative data available.</p>
+                                        </div>
+                                        <!-- Abstract graphic for bento card -->
+                                        <div
+                                                class="top-0 left-0 absolute bg-gradient-to-br from-surface-container-high to-transparent opacity-50 rounded-br-full w-2/3 h-1/2 group-hover:scale-105 transition-transform duration-500">
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+                <!-- How it Works (Timeline) -->
+                <section class="bg-surface-bright py-xxl border-t border-outline-variant">
+                        <div class="mx-auto px-gutter max-w-container-max">
+                                <div class="mb-xl text-center">
+                                        <h2 class="mb-sm font-headline-lg text-headline-lg text-on-surface">How
+                                                SafeSignal Works</h2>
+                                        <p class="mx-auto max-w-2xl font-body-lg text-body-lg text-on-surface-variant">A
+                                                seamless 5-step pipeline that turns raw UPI IDs into actionable security
+                                                intelligence.</p>
+                                </div>
+                                <div class="relative mx-auto max-w-4xl">
+                                        <!-- Connecting Line -->
+                                        <div
+                                                class="hidden md:block top-1/2 left-0 z-0 absolute bg-outline-variant w-full h-[2px] -translate-y-1/2">
+                                        </div>
+                                        <div class="z-10 relative gap-md grid grid-cols-1 md:grid-cols-5">
+                                                <!-- Step 1 -->
+                                                <div
+                                                        class="flex flex-row md:flex-col items-center gap-md bg-surface-container-lowest md:bg-transparent shadow-elevation-1 md:shadow-none p-md md:p-0 border md:border-none rounded-lg border-outline-variant text-left md:text-center">
+                                                        <div
+                                                                class="flex justify-center items-center bg-surface-container bg-surface-container-lowest border-2 rounded-full border-outline-variant w-12 h-12 font-title-lg text-on-surface text-title-lg shrink-0">
+                                                                1</div>
+                                                        <div>
+                                                                <h4
+                                                                        class="mb-xs font-title-md text-on-surface text-title-md">
+                                                                        Enter UPI</h4>
+                                                                <p
+                                                                        class="font-body-md text-body-md text-on-surface-variant">
+                                                                        Input VPA or phone number</p>
+                                                        </div>
+                                                </div>
+                                                <!-- Step 2 -->
+                                                <div
+                                                        class="flex flex-row md:flex-col items-center gap-md bg-surface-container-lowest md:bg-transparent shadow-elevation-1 md:shadow-none p-md md:p-0 border md:border-none rounded-lg border-outline-variant text-left md:text-center">
+                                                        <div
+                                                                class="flex justify-center items-center bg-primary-container border-2 border-primary-container rounded-full w-12 h-12 font-title-lg text-on-primary-container text-title-lg shrink-0">
+                                                                <span class="material-symbols-outlined">memory</span>
+                                                        </div>
+                                                        <div>
+                                                                <h4
+                                                                        class="mb-xs font-title-md text-on-surface text-title-md">
+                                                                        AI Analysis</h4>
+                                                                <p
+                                                                        class="font-body-md text-body-md text-on-surface-variant">
+                                                                        Pattern recognition algorithms</p>
+                                                        </div>
+                                                </div>
+                                                <!-- Step 3 -->
+                                                <div
+                                                        class="flex flex-row md:flex-col items-center gap-md bg-surface-container-lowest md:bg-transparent shadow-elevation-1 md:shadow-none p-md md:p-0 border md:border-none rounded-lg border-outline-variant text-left md:text-center">
+                                                        <div
+                                                                class="flex justify-center items-center bg-surface-container bg-surface-container-lowest border-2 rounded-full border-outline-variant w-12 h-12 font-title-lg text-on-surface text-title-lg shrink-0">
+                                                                <span class="material-symbols-outlined">hub</span>
+                                                        </div>
+                                                        <div>
+                                                                <h4
+                                                                        class="mb-xs font-title-md text-on-surface text-title-md">
+                                                                        Threat Intel</h4>
+                                                                <p
+                                                                        class="font-body-md text-body-md text-on-surface-variant">
+                                                                        Cross-reference databases</p>
+                                                        </div>
+                                                </div>
+                                                <!-- Step 4 -->
+                                                <div
+                                                        class="flex flex-row md:flex-col items-center gap-md bg-surface-container-lowest md:bg-transparent shadow-elevation-1 md:shadow-none p-md md:p-0 border md:border-none rounded-lg border-outline-variant text-left md:text-center">
+                                                        <div
+                                                                class="flex justify-center items-center bg-error-container border-2 border-error-container rounded-full w-12 h-12 font-title-lg text-on-error-container text-title-lg shrink-0">
+                                                                <span class="material-symbols-outlined">speed</span>
+                                                        </div>
+                                                        <div>
+                                                                <h4
+                                                                        class="mb-xs font-title-md text-on-surface text-title-md">
+                                                                        Risk Score</h4>
+                                                                <p
+                                                                        class="font-body-md text-body-md text-on-surface-variant">
+                                                                        Generate 0-100 severity metric</p>
+                                                        </div>
+                                                </div>
+                                                <!-- Step 5 -->
+                                                <div
+                                                        class="flex flex-row md:flex-col items-center gap-md bg-surface-container-lowest md:bg-transparent shadow-elevation-1 md:shadow-none p-md md:p-0 border md:border-none rounded-lg border-outline-variant text-left md:text-center">
+                                                        <div
+                                                                class="flex justify-center items-center bg-secondary-container border-2 border-secondary-container rounded-full w-12 h-12 font-title-lg text-on-secondary-container text-title-lg shrink-0">
+                                                                <span class="material-symbols-outlined">gavel</span>
+                                                        </div>
+                                                        <div>
+                                                                <h4
+                                                                        class="mb-xs font-title-md text-on-surface text-title-md">
+                                                                        Decision</h4>
+                                                                <p
+                                                                        class="font-body-md text-body-md text-on-surface-variant">
+                                                                        Block, flag, or clear transaction</p>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+                <!-- Final CTA -->
+                <section class="mx-auto px-gutter py-xxl max-w-container-max">
+                        <div
+                                class="relative flex flex-col items-center bg-primary-container p-xl md:p-[64px] rounded-[24px] overflow-hidden text-center">
+                                <!-- Abstract pattern overlay -->
+                                <div
+                                        class="absolute inset-0 bg-[length:20px_20px] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-on-primary-container via-transparent to-transparent opacity-10">
+                                </div>
+                                <div class="z-10 relative max-w-2xl">
+                                        <span
+                                                class="mb-md text-[48px] text-on-primary-container material-symbols-outlined">shield_locked</span>
+                                        <h2 class="mb-sm font-headline-lg text-headline-lg text-on-primary-container">
+                                                Ready to secure your transactions?</h2>
+                                        <p class="mb-lg font-title-md text-on-primary-container/80 text-title-md">Join
+                                                enterprise investigators and everyday users in building a fraud-free
+                                                digital payments ecosystem.</p>
+                                        <button
+                                                class="bg-surface-container-lowest hover:shadow-elevation-2 px-xl py-md rounded-lg font-title-md font-bold text-primary text-title-md transition-all hover:-translate-y-1 duration-200">
+                                                Start Checking UPI IDs
+                                        </button>
+                                </div>
+                        </div>
+                </section>
+        </main>
+        <!-- Footer -->
+        <footer
+                class="bottom gap-lg grid grid-cols-1 md:grid-cols-4 bg-surface-container-highest dark:bg-inverse-surface mx-auto mt-xxl px-gutter py-xl dark:border-outline border-t border-outline-variant w-full max-w-container-max flat no shadows full-width">
+                <div class="flex flex-col gap-sm col-span-1 md:col-span-1">
+                        <span
+                                class="flex items-center gap-xs font-title-md font-bold text-on-surface text-title-md dark:text-inverse-on-surface">
+                                <span class="text-primary material-symbols-outlined">security</span> SafeSignal
+                        </span>
+                        <p class="mt-sm font-body-md text-body-md text-on-surface-variant dark:text-surface-variant">
+                                © 2024 SafeSignal. Empowering Indian Digital Payments Security.
+                        </p>
+                </div>
+                <div class="flex flex-wrap md:justify-end gap-lg col-span-1 md:col-span-3">
+                        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary dark:text-surface-variant transition-colors"
+                                href="#">NPCI Guidelines</a>
+                        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary dark:text-surface-variant transition-colors"
+                                href="#">RBI Cyber Policy</a>
+                        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary dark:text-surface-variant transition-colors"
+                                href="#">Report Cybercrime</a>
+                        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary dark:text-surface-variant transition-colors"
+                                href="#">Privacy Protocol</a>
+                        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary dark:text-surface-variant transition-colors"
+                                href="#">API Docs</a>
+                </div>
+        </footer>
+</body>
+
+</html>

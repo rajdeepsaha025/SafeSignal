@@ -1,0 +1,50 @@
+{
+  "name": "safesignal-backend",
+  "version": "1.0.0",
+  "description": "SafeSignal — India's Real-Time UPI Fraud Detection & Pre-Transaction Risk Scorer (Backend API)",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "vitest run",
+    "lint": "eslint src/ --ext .js --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write \"src/**/*.js\"",
+    "seed": "node scripts/seedFirestore.js",
+    "seed:clear": "node scripts/seedFirestore.js --clear"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "firebase-admin": "^12.0.0",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "uuid": "^10.0.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "eslint": "^9.5.0",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.2",
+    "vitest": "^5.0.0"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "js,json",
+    "ignore": [
+      "src/logs/*"
+    ],
+    "delay": 500
+  },
+  "author": "SafeSignal Team",
+  "license": "MIT"
+}

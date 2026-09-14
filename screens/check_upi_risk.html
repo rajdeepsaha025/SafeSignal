@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>SafeSignal - Check UPI</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+                rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet" />
+        <script id="tailwind-config">
+                tailwind.config = {
+                        darkMode: "class",
+                        theme: {
+                                extend: {
+                                        "colors": {
+                                                "on-secondary-fixed": "#002204",
+                                                "on-tertiary-container": "#ffe0bb",
+                                                "inverse-primary": "#a9c7ff",
+                                                "on-background": "#141b2b",
+                                                "on-error-container": "#93000a",
+                                                "surface-tint": "#005db7",
+                                                "secondary": "#1b6d24",
+                                                "background": "#f9f9ff",
+                                                "surface-variant": "#dce2f7",
+                                                "error-container": "#ffdad6",
+                                                "on-primary-fixed": "#001b3d",
+                                                "surface-container-high": "#e1e8fd",
+                                                "tertiary-fixed-dim": "#ffb957",
+                                                "outline": "#727783",
+                                                "on-secondary-container": "#217128",
+                                                "secondary-container": "#a0f399",
+                                                "surface-container-lowest": "#ffffff",
+                                                "secondary-fixed-dim": "#88d982",
+                                                "on-secondary": "#ffffff",
+                                                "on-primary-container": "#dae5ff",
+                                                "primary-container": "#1565c0",
+                                                "on-tertiary": "#ffffff",
+                                                "surface-dim": "#d3daef",
+                                                "on-primary-fixed-variant": "#00468c",
+                                                "primary": "#004d99",
+                                                "on-surface": "#141b2b",
+                                                "tertiary": "#6d4500",
+                                                "on-secondary-fixed-variant": "#005312",
+                                                "on-tertiary-fixed-variant": "#643f00",
+                                                "tertiary-container": "#8e5b00",
+                                                "tertiary-fixed": "#ffddb5",
+                                                "surface-bright": "#f9f9ff",
+                                                "inverse-surface": "#293040",
+                                                "on-error": "#ffffff",
+                                                "surface": "#f9f9ff",
+                                                "primary-fixed-dim": "#a9c7ff",
+                                                "surface-container-highest": "#dce2f7",
+                                                "secondary-fixed": "#a3f69c",
+                                                "on-primary": "#ffffff",
+                                                "outline-variant": "#c2c6d4",
+                                                "on-surface-variant": "#424752",
+                                                "surface-container": "#e9edff",
+                                                "error": "#ba1a1a",
+                                                "surface-container-low": "#f1f3ff",
+                                                "primary-fixed": "#d6e3ff",
+                                                "inverse-on-surface": "#edf0ff",
+                                                "on-tertiary-fixed": "#2a1800"
+                                        },
+                                        "borderRadius": {
+                                                "DEFAULT": "0.25rem",
+                                                "lg": "0.5rem",
+                                                "xl": "0.75rem",
+                                                "full": "9999px"
+                                        },
+                                        "spacing": {
+                                                "sm": "8px",
+                                                "gutter": "24px",
+                                                "xs": "4px",
+                                                "margin-desktop": "32px",
+                                                "base": "8px",
+                                                "lg": "24px",
+                                                "margin-mobile": "16px",
+                                                "md": "16px",
+                                                "xl": "32px",
+                                                "xxl": "48px",
+                                                "container-max": "1440px"
+                                        },
+                                        "fontFamily": {
+                                                "headline-lg-mobile": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "body-md": [
+                                                        "Inter"
+                                                ],
+                                                "body-lg": [
+                                                        "Inter"
+                                                ],
+                                                "headline-md": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "headline-sm": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "label-lg": [
+                                                        "Inter"
+                                                ],
+                                                "title-md": [
+                                                        "Inter"
+                                                ],
+                                                "headline-lg": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "label-md": [
+                                                        "Inter"
+                                                ],
+                                                "title-lg": [
+                                                        "Inter"
+                                                ],
+                                                "display-lg": [
+                                                        "Plus Jakarta Sans"
+                                                ]
+                                        },
+                                        "fontSize": {
+                                                "headline-lg-mobile": [
+                                                        "28px",
+                                                        {
+                                                                "lineHeight": "36px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "body-md": [
+                                                        "14px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "letterSpacing": "0.25px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "body-lg": [
+                                                        "16px",
+                                                        {
+                                                                "lineHeight": "24px",
+                                                                "letterSpacing": "0.5px",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "headline-md": [
+                                                        "28px",
+                                                        {
+                                                                "lineHeight": "36px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "headline-sm": [
+                                                        "24px",
+                                                        {
+                                                                "lineHeight": "32px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "label-lg": [
+                                                        "14px",
+                                                        {
+                                                                "lineHeight": "20px",
+                                                                "letterSpacing": "0.1px",
+                                                                "fontWeight": "500"
+                                                        }
+                                                ],
+                                                "title-md": [
+                                                        "16px",
+                                                        {
+                                                                "lineHeight": "24px",
+                                                                "letterSpacing": "0.15px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "headline-lg": [
+                                                        "32px",
+                                                        {
+                                                                "lineHeight": "40px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "label-md": [
+                                                        "12px",
+                                                        {
+                                                                "lineHeight": "16px",
+                                                                "letterSpacing": "0.5px",
+                                                                "fontWeight": "500"
+                                                        }
+                                                ],
+                                                "title-lg": [
+                                                        "22px",
+                                                        {
+                                                                "lineHeight": "28px",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "display-lg": [
+                                                        "57px",
+                                                        {
+                                                                "lineHeight": "64px",
+                                                                "letterSpacing": "-0.25px",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ]
+                                        }
+                                },
+                        },
+                }
+        </script>
+        <style>
+                .result-enter {
+                        animation: slideUpFade 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                        opacity: 0;
+                        transform: translateY(20px);
+                }
+
+                @keyframes slideUpFade {
+                        to {
+                                opacity: 1;
+                                transform: translateY(0);
+                        }
+                }
+        </style>
+</head>
+
+<body class="flex flex-col bg-background min-h-screen text-on-background">
+
+        {{DATA:COMPONENTS:COMPONENTS_2}}
+
+        <main class="flex-grow mx-auto px-margin-mobile md:px-margin-desktop py-xl w-full max-w-container-max">
+                <!-- Search Hero Section -->
+                <div class="mx-auto mb-xxl max-w-3xl text-center">
+                        <h1
+                                class="mb-md font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile text-primary md:text-headline-lg">
+                                Check UPI Risk Profile</h1>
+                        <p class="mb-lg font-body-lg text-body-lg text-on-surface-variant">Instantly verify any UPI ID
+                                or phone number against our comprehensive fraud intelligence network.</p>
+                        <div
+                                class="bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-lg border rounded-[20px] border-outline-variant text-left">
+                                <label class="block mb-sm font-label-lg text-label-lg text-on-surface"
+                                        for="upi-input">Enter UPI ID or Phone Number</label>
+                                <div class="relative mb-md">
+                                        <span class="top-1/2 left-sm absolute text-outline -translate-y-1/2 material-symbols-outlined"
+                                                data-icon="search">search</span>
+                                        <input class="bg-surface py-md pr-sm pl-xl border focus:border-primary rounded-lg border-outline-variant focus:outline-none focus:ring-1 focus:ring-primary w-full font-body-lg text-body-lg text-on-surface transition-colors"
+                                                id="upi-input" placeholder="e.g., username@bank or 9876543210"
+                                                type="text" value="fraudster@upi" />
+                                </div>
+                                <div class="flex sm:flex-row flex-col justify-end gap-sm">
+                                        <button
+                                                class="flex justify-center items-center gap-xs bg-surface-variant hover:bg-surface-container-high px-md py-sm rounded-lg font-label-lg text-label-lg text-on-surface transition-colors">
+                                                <span class="material-symbols-outlined" data-icon="content_copy"
+                                                        style="font-size: 18px;">content_copy</span> Paste
+                                        </button>
+                                        <button
+                                                class="hover:bg-surface px-md py-sm border rounded-lg border-outline-variant font-label-lg text-label-lg text-on-surface transition-colors">Clear</button>
+                                        <button class="flex justify-center items-center gap-xs bg-primary-container hover:bg-primary shadow-sm hover:shadow-md px-lg py-sm rounded-lg font-label-lg text-label-lg text-on-primary-container hover:text-on-primary transition-all"
+                                                id="check-btn">
+                                                Check Risk
+                                        </button>
+                                </div>
+                        </div>
+                </div>
+                <!-- Results Section (Initially hidden, shown via JS for demo) -->
+                <div class="space-y-lg mx-auto max-w-5xl result-enter" id="results-container">
+                        <!-- Top Summary Row -->
+                        <div class="gap-lg grid grid-cols-1 md:grid-cols-3">
+                                <!-- Main Risk Score -->
+                                <div
+                                        class="flex flex-col justify-center items-center md:col-span-1 bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-lg border rounded-[20px] border-outline-variant">
+                                        <h2
+                                                class="mb-sm pb-sm border-b border-outline-variant w-full font-title-md text-on-surface text-title-md text-center">
+                                                Risk Assessment</h2>
+                                        <div class="relative my-md w-32 h-32">
+                                                <!-- Simple CSS based circle -->
+                                                <svg class="w-full h-full -rotate-90 transform" viewbox="0 0 100 100">
+                                                        <circle cx="50" cy="50" fill="none" r="45" stroke="#ffdad6"
+                                                                stroke-width="10"></circle>
+                                                        <circle cx="50" cy="50" fill="none" r="45" stroke="#ba1a1a"
+                                                                stroke-dasharray="283" stroke-dashoffset="28"
+                                                                stroke-linecap="round" stroke-width="10"></circle>
+                                                </svg>
+                                                <div class="absolute inset-0 flex flex-col justify-center items-center">
+                                                        <span
+                                                                class="font-headline-md text-error text-headline-md">92</span>
+                                                        <span
+                                                                class="font-label-md text-label-md text-on-surface-variant">/
+                                                                100</span>
+                                                </div>
+                                        </div>
+                                        <div
+                                                class="bg-[#ffdad6] mb-sm px-md py-xs rounded-full font-label-lg text-[#93000a] text-label-lg">
+                                                HIGH RISK</div>
+                                        <p class="font-body-md text-body-md text-on-surface-variant text-center">
+                                                Multiple recent fraud flags detected.</p>
+                                </div>
+                                <!-- Entity Details -->
+                                <div
+                                        class="flex flex-col justify-between md:col-span-2 bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-lg border rounded-[20px] border-outline-variant">
+                                        <h2
+                                                class="mb-sm pb-sm border-b border-outline-variant font-title-md text-on-surface text-title-md">
+                                                Entity Profile</h2>
+                                        <div class="gap-md grid grid-cols-2 mt-sm mb-auto">
+                                                <div>
+                                                        <p class="text-outline font-label-md text-label-md">Target ID
+                                                        </p>
+                                                        <p
+                                                                class="font-body-lg font-semibold text-body-lg text-on-surface">
+                                                                fraudster@upi</p>
+                                                </div>
+                                                <div>
+                                                        <p class="text-outline font-label-md text-label-md">Associated
+                                                                Name (Masked)</p>
+                                                        <p
+                                                                class="font-body-lg font-semibold text-body-lg text-on-surface">
+                                                                R*** K****</p>
+                                                </div>
+                                                <div>
+                                                        <p class="text-outline font-label-md text-label-md">First Seen
+                                                        </p>
+                                                        <p class="font-body-md text-body-md text-on-surface">12 Oct 2023
+                                                        </p>
+                                                </div>
+                                                <div>
+                                                        <p class="text-outline font-label-md text-label-md">Last
+                                                                Activity</p>
+                                                        <p class="font-body-md text-body-md text-on-surface">2 Hours Ago
+                                                        </p>
+                                                </div>
+                                        </div>
+                                        <div class="flex justify-end mt-md pt-md border-t border-outline-variant">
+                                                <button
+                                                        class="flex items-center gap-xs hover:bg-error-container px-sm py-xs rounded font-label-lg text-error text-label-lg transition-colors">
+                                                        <span class="material-symbols-outlined" data-icon="report"
+                                                                style="font-size: 18px;">report</span> Report Fraud
+                                                </button>
+                                        </div>
+                                </div>
+                        </div>
+                        <!-- Evidence Bento Grid -->
+                        <h3 class="mt-xl mb-md font-title-lg text-on-surface text-title-lg">Evidence &amp; Signals</h3>
+                        <div class="gap-md grid grid-cols-1 md:grid-cols-3">
+                                <div
+                                        class="bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-md border rounded-[20px] border-outline-variant">
+                                        <div
+                                                class="flex items-center gap-sm mb-sm pb-sm border-b border-outline-variant">
+                                                <span class="text-secondary material-symbols-outlined"
+                                                        data-icon="groups">groups</span>
+                                                <h4 class="font-title-md text-on-surface text-title-md">Community
+                                                        Reports</h4>
+                                        </div>
+                                        <p class="mb-xs font-headline-sm text-headline-sm text-on-surface">14</p>
+                                        <p class="font-body-md text-body-md text-on-surface-variant">Users flagged this
+                                                ID for suspicious behavior in the last 30 days.</p>
+                                </div>
+                                <div
+                                        class="bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-md border rounded-[20px] border-outline-variant">
+                                        <div
+                                                class="flex items-center gap-sm mb-sm pb-sm border-b border-outline-variant">
+                                                <span class="text-primary material-symbols-outlined"
+                                                        data-icon="database">database</span>
+                                                <h4 class="font-title-md text-on-surface text-title-md">External
+                                                        Databases</h4>
+                                        </div>
+                                        <ul class="space-y-sm mt-sm">
+                                                <li class="flex justify-between items-center font-body-md text-body-md">
+                                                        <span class="text-on-surface">I4C Registry</span>
+                                                        <span class="font-medium text-error">Flagged</span>
+                                                </li>
+                                                <li class="flex justify-between items-center font-body-md text-body-md">
+                                                        <span class="text-on-surface">Bank Blacklist</span>
+                                                        <span class="text-on-surface-variant">Unknown</span>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div
+                                        class="bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-md border rounded-[20px] border-outline-variant">
+                                        <div
+                                                class="flex items-center gap-sm mb-sm pb-sm border-b border-outline-variant">
+                                                <span class="text-tertiary material-symbols-outlined"
+                                                        data-icon="memory">memory</span>
+                                                <h4 class="font-title-md text-on-surface text-title-md">ML Prediction
+                                                </h4>
+                                        </div>
+                                        <p class="mb-xs font-headline-sm text-headline-sm text-on-surface">88%</p>
+                                        <p class="font-body-md text-body-md text-on-surface-variant">Confidence that
+                                                this ID exhibits patterns of payment solicitation fraud.</p>
+                                </div>
+                        </div>
+                        <!-- Timeline -->
+                        <div
+                                class="bg-surface-container-lowest shadow-[0px_4px_20px_rgba(0,0,0,0.05)] mt-lg p-lg border rounded-[20px] border-outline-variant">
+                                <h3
+                                        class="mb-md pb-sm border-b border-outline-variant font-title-md text-on-surface text-title-md">
+                                        Activity Timeline</h3>
+                                <div class="space-y-md">
+                                        <!-- Item 1 -->
+                                        <div class="relative flex gap-md">
+                                                <div class="flex flex-col items-center">
+                                                        <div class="z-10 bg-error mt-1.5 rounded-full w-2 h-2"></div>
+                                                        <div
+                                                                class="top-3 bottom-0 left-[3px] -z-0 absolute bg-outline-variant w-px h-full">
+                                                        </div>
+                                                </div>
+                                                <div>
+                                                        <p class="font-label-md text-label-md text-on-surface-variant">
+                                                                Today, 10:45 AM</p>
+                                                        <p
+                                                                class="font-body-md font-medium text-body-md text-on-surface">
+                                                                Reported for 'Phishing Request' via SafeSignal App.</p>
+                                                </div>
+                                        </div>
+                                        <!-- Item 2 -->
+                                        <div class="relative flex gap-md">
+                                                <div class="flex flex-col items-center">
+                                                        <div class="z-10 mt-1.5 rounded-full bg-outline w-2 h-2"></div>
+                                                        <div
+                                                                class="top-3 bottom-0 left-[3px] -z-0 absolute bg-outline-variant w-px h-full">
+                                                        </div>
+                                                </div>
+                                                <div>
+                                                        <p class="font-label-md text-label-md text-on-surface-variant">
+                                                                Yesterday, 14:20 PM</p>
+                                                        <p
+                                                                class="font-body-md font-medium text-body-md text-on-surface">
+                                                                I4C Database sync updated risk score.</p>
+                                                </div>
+                                        </div>
+                                        <!-- Item 3 -->
+                                        <div class="relative flex gap-md">
+                                                <div class="flex flex-col items-center">
+                                                        <div class="z-10 bg-error mt-1.5 rounded-full w-2 h-2"></div>
+                                                </div>
+                                                <div>
+                                                        <p class="font-label-md text-label-md text-on-surface-variant">
+                                                                12 Oct 2023</p>
+                                                        <p
+                                                                class="font-body-md font-medium text-body-md text-on-surface">
+                                                                Initial cluster of 5 community reports logged.</p>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </main>
+        <script>
+                // Simple script to re-trigger the entrance animation for demonstration
+                document.getElementById('check-btn').addEventListener('click', function () {
+                        const results = document.getElementById('results-container');
+                        results.classList.remove('result-enter');
+                        void results.offsetWidth; // trigger reflow
+                        results.classList.add('result-enter');
+                });
+        </script>
+</body>
+
+</html>
