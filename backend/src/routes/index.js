@@ -12,6 +12,7 @@ import healthRoutes from './healthRoutes.js';
 import authRoutes   from './authRoutes.js';
 import testRoutes   from './testRoutes.js';
 import riskRoutes   from './riskRoutes.js';
+import reportRoutes from './reportRoutes.js';
 
 const router = Router();
 
@@ -25,7 +26,7 @@ router.use('/auth', authRoutes);
 router.use('/test', testRoutes);
 
 // ─── Feature routes (to be added as features are built) ──────────────────────
-// router.use('/reports', reportRoutes);
+router.use('/reports', reportRoutes);
 router.use('/check', riskRoutes);
 // router.use('/admin',   adminRoutes);
 

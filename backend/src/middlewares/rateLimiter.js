@@ -78,3 +78,41 @@ export const riskCheckLimiter = rateLimit({
     });
   },
 });
+
+/**
+ * Limiter for Community Report submissions.
+ * 5 requests per hour.
+ */
+export const reportSubmissionLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    res.status(HTTP_STATUS.TOO_MANY_REQUESTS).json({
+      success: false,
+      message: 'You have exceeded the maximum number of report submissions allowed per hour. Please try again later.',
+      errors: [],
+      timestamp: new Date().toISOString(),
+    });
+  },
+});
+
+/**
+ * Limiter for moderation actions.
+ * 50 requests per 15 minutes.
+ */
+export const moderationLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 50,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    res.status(HTTP_STATUS.TOO_MANY_REQUESTS).json({
+      success: false,
+      message: 'Moderation rate limit exceeded. Please slow down.',
+      errors: [],
+      timestamp: new Date().toISOString(),
+    });
+  },
+});

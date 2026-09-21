@@ -1,0 +1,23 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Default deny for all other paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+    
+    // Evidence uploads for community reports
+    match /reports/{reportId}/{fileName} {
+      // Must be authenticated to upload
+      // Max size: 5MB
+      // Allowed types: images and pdfs
+      allow write: if request.auth != null
+                   && request.resource.size < 5 * 1024 * 1024 
+                   && request.resource.contentType.matches('image/.*|application/pdf');
+                   
+      // Must be authenticated to view evidence
+      allow read: if request.auth != null;
+    }
+  }
+}
