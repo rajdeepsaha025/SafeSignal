@@ -12,7 +12,7 @@ export class CommunitySignal {
    * @param {number} context.pendingCount
    * @param {number} context.rejectedCount
    */
-  evaluate({ pendingCount = 0, rejectedCount = 0 }) {
+  evaluate({ pendingCount = 0, _rejectedCount = 0 }) {
     // Rejected reports do NOT increase risk.
     let score = pendingCount * SIGNAL_WEIGHTS.PENDING_REPORTS.BASE_WEIGHT;
 

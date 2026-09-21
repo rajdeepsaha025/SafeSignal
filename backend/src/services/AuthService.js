@@ -33,7 +33,9 @@ class AuthService {
    */
   async verifyToken(idToken) {
     if (!auth) {
-      throw { code: 'auth/service-unavailable', message: 'Authentication service is unavailable' };
+      const error = new Error('Authentication service is unavailable');
+      error.code = 'auth/service-unavailable';
+      throw error;
     }
 
     try {
@@ -75,10 +77,9 @@ class AuthService {
    */
   validateUserStatus(profile) {
     if (profile.status === USER_STATUS.BLOCKED) {
-      throw {
-        code:    'auth/user-blocked',
-        message: 'Account has been blocked. Contact support for assistance.',
-      };
+      const error = new Error('Account has been blocked. Contact support for assistance.');
+      error.code = 'auth/user-blocked';
+      throw error;
     }
   }
 

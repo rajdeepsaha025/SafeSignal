@@ -7,7 +7,7 @@
 import { FieldValue } from 'firebase-admin/firestore';
 import { BaseRepository } from './BaseRepository.js';
 import { upiProfileConverter } from '../converters/upiProfileConverter.js';
-import { COLLECTIONS, RISK_LEVELS } from '../config/constants.js';
+import { COLLECTIONS } from '../config/constants.js';
 import { firestore } from '../config/firebaseAdmin.js';
 
 class UPIRepository extends BaseRepository {

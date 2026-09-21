@@ -61,7 +61,7 @@ class RiskService {
     };
 
     if (intelligence.isUnknown) {
-      responseData.warning = "Low risk does not guarantee that the recipient is legitimate.";
+      responseData.warning = 'Low risk does not guarantee that the recipient is legitimate.';
     }
 
     // 6. Update Cache

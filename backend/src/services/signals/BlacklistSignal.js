@@ -18,7 +18,7 @@ export class BlacklistSignal {
         score: SIGNAL_WEIGHTS.BLACKLIST.SCORE, // Override score
         severity: 'HIGH',
         evidenceCount: 1,
-        description: "UPI ID is currently listed as blacklisted in SafeSignal intelligence.",
+        description: 'UPI ID is currently listed as blacklisted in SafeSignal intelligence.',
       };
     }
     return { name: RISK_SIGNALS.BLACKLIST, score: 0, severity: 'NONE', evidenceCount: 0, description: '' };

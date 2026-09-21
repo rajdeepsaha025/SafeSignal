@@ -33,7 +33,7 @@ export const getMe = asyncHandler(async (req, res) => {
   }
 
   // Never expose the raw decoded token to the client
-  const { token: _token, ...safeUser } = req.user;
+  const { token: _token, ..._safeUser } = req.user;
 
   return res.status(HTTP_STATUS.OK).json(
     ApiResponse.success(

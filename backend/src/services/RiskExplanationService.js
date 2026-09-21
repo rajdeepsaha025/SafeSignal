@@ -14,18 +14,18 @@ class RiskExplanationService {
    */
   generateSummary(riskLevel, signals, isUnknown) {
     if (isUnknown) {
-      return "No significant SafeSignal risk signals were found.";
+      return 'No significant SafeSignal risk signals were found.';
     }
 
     if (riskLevel === RISK_LEVELS.HIGH) {
-      return "Multiple significant risk signals were found. High probability of suspicious activity.";
+      return 'Multiple significant risk signals were found. High probability of suspicious activity.';
     }
 
     if (riskLevel === RISK_LEVELS.MEDIUM) {
-      return "Some risk signals were found. Proceed with caution.";
+      return 'Some risk signals were found. Proceed with caution.';
     }
 
-    return "Risk signals indicate normal or low-risk activity.";
+    return 'Risk signals indicate normal or low-risk activity.';
   }
 
   /**

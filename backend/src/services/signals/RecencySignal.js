@@ -25,17 +25,17 @@ export class RecencySignal {
     const hoursSinceLastReport = (Date.now() - latestDate) / (1000 * 60 * 60);
 
     let multiplier = SIGNAL_WEIGHTS.RECENCY.OLDER_MULTIPLIER;
-    let description = "Most reports are older than 30 days.";
+    let description = 'Most reports are older than 30 days.';
 
     if (hoursSinceLastReport <= 24) {
       multiplier = SIGNAL_WEIGHTS.RECENCY.LAST_24_HOURS_MULTIPLIER;
-      description = "Recent approved reports were submitted within the last 24 hours.";
+      description = 'Recent approved reports were submitted within the last 24 hours.';
     } else if (hoursSinceLastReport <= 24 * 7) {
       multiplier = SIGNAL_WEIGHTS.RECENCY.LAST_7_DAYS_MULTIPLIER;
-      description = "Approved reports were submitted within the last 7 days.";
+      description = 'Approved reports were submitted within the last 7 days.';
     } else if (hoursSinceLastReport <= 24 * 30) {
       multiplier = SIGNAL_WEIGHTS.RECENCY.LAST_30_DAYS_MULTIPLIER;
-      description = "Approved reports were submitted within the last 30 days.";
+      description = 'Approved reports were submitted within the last 30 days.';
     }
 
     // The score here could be implemented as a bonus to the final score, or as a multiplier.

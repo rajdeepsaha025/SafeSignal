@@ -54,7 +54,7 @@ class RiskEngineService {
 
     const signals = this.evaluators.map(evaluator => evaluator.evaluate(context));
 
-    let finalScore = this._calculateFinalScore(signals);
+    const finalScore = this._calculateFinalScore(signals);
     const riskLevel = this._determineRiskLevel(finalScore);
     const confidenceLevel = this._determineConfidence(context, finalScore);
     
@@ -114,7 +114,7 @@ class RiskEngineService {
     return RISK_LEVELS.HIGH;
   }
 
-  _determineConfidence(context, score) {
+  _determineConfidence(context, _score) {
     const totalEvidence = context.approvedCount + context.pendingCount + context.rejectedCount;
     
     if (context.isBlacklisted) return CONFIDENCE_LEVELS.HIGH;
