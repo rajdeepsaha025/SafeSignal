@@ -126,12 +126,6 @@ export default function Navbar() {
 
         {/* Actions */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <IconButton aria-label="notifications" color="default" size="small">
-            <Badge badgeContent={3} color="error">
-              <span className="material-symbols-outlined">notifications</span>
-            </Badge>
-          </IconButton>
-
           <IconButton aria-label="settings" color="default" size="small" onClick={() => navigate('/admin')}>
             <span className="material-symbols-outlined">settings</span>
           </IconButton>
