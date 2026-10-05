@@ -13,6 +13,7 @@ import authRoutes   from './authRoutes.js';
 import testRoutes   from './testRoutes.js';
 import riskRoutes   from './riskRoutes.js';
 import reportRoutes from './reportRoutes.js';
+import adminRoutes from './adminRoutes.js';
 
 const router = Router();
 
@@ -28,6 +29,6 @@ router.use('/test', testRoutes);
 // ─── Feature routes (to be added as features are built) ──────────────────────
 router.use('/reports', reportRoutes);
 router.use('/check', riskRoutes);
-// router.use('/admin',   adminRoutes);
+router.use('/admin', adminRoutes);
 
 export default router;

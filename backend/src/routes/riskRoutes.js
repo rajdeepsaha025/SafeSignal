@@ -5,7 +5,7 @@
 
 import { Router } from 'express';
 import authenticateFirebase from '../middlewares/authenticate.js';
-import validate from '../middlewares/validate.js';
+import { validate } from '../middlewares/validate.js';
 import { riskCheckLimiter } from '../middlewares/rateLimiter.js';
 import { checkRiskScore } from '../controllers/RiskController.js';
 import { riskCheckSchema } from '../validators/riskValidator.js';

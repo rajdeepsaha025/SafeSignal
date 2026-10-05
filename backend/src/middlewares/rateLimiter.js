@@ -116,3 +116,22 @@ export const moderationLimiter = rateLimit({
     });
   },
 });
+
+/**
+ * Limiter for administrative endpoints.
+ * 100 requests per 15 minutes.
+ */
+export const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    res.status(HTTP_STATUS.TOO_MANY_REQUESTS).json({
+      success: false,
+      message: 'Administrative rate limit exceeded. Please slow down.',
+      errors: [],
+      timestamp: new Date().toISOString(),
+    });
+  },
+});

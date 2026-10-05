@@ -3,7 +3,7 @@
  * REST Handlers for Community Reporting.
  */
 
-import { asyncHandler } from '../utils/asyncHandler.js';
+import asyncHandler from '../utils/asyncHandler.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { HTTP_STATUS } from '../config/constants.js';
 import reportService from '../services/ReportService.js';

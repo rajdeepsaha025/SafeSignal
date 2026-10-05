@@ -3,7 +3,7 @@
  * REST Handlers for Moderating Reports.
  */
 
-import { asyncHandler } from '../utils/asyncHandler.js';
+import asyncHandler from '../utils/asyncHandler.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { HTTP_STATUS } from '../config/constants.js';
 import moderationService from '../services/ModerationService.js';
