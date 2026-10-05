@@ -43,6 +43,25 @@ function validateEnv() {
 
 validateEnv();
 
+/**
+ * Robustly formats a private key string, fixing common pasting errors.
+ */
+function formatPrivateKey(key) {
+  if (!key) return '';
+  let k = key.replace(/\\n/g, '\n').replace(/"/g, '').trim();
+  
+  // If the key was pasted as a single line (spaces instead of newlines)
+  if (!k.includes('\n')) {
+    const match = k.match(/(-----BEGIN [A-Z ]+-----)(.*)(-----END [A-Z ]+-----)/);
+    if (match) {
+      const base64 = match[2].replace(/\s+/g, '');
+      const chunks = base64.match(/.{1,64}/g) || [];
+      k = `${match[1]}\n${chunks.join('\n')}\n${match[3]}`;
+    }
+  }
+  return k;
+}
+
 export const env = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   PORT: parseInt(process.env.PORT || '5000', 10),
@@ -50,9 +69,7 @@ export const env = {
   // Firebase
   FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID || '',
   FIREBASE_CLIENT_EMAIL: process.env.FIREBASE_CLIENT_EMAIL || '',
-  FIREBASE_PRIVATE_KEY: (process.env.FIREBASE_PRIVATE_KEY || '')
-    .replace(/\\n/g, '\n')
-    .replace(/"/g, ''),
+  FIREBASE_PRIVATE_KEY: formatPrivateKey(process.env.FIREBASE_PRIVATE_KEY),
   FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET || '',
 
   // Security
