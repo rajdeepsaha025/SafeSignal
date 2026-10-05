@@ -48,16 +48,15 @@ validateEnv();
  */
 function formatPrivateKey(key) {
   if (!key) return '';
-  let k = key.replace(/\\n/g, '\n').replace(/"/g, '').trim();
+  let k = key.replace(/\\n/g, '\n').replace(/"/g, '').replace(/\r/g, '').trim();
   
-  // If the key was pasted as a single line (spaces instead of newlines)
-  if (!k.includes('\n')) {
-    const match = k.match(/(-----BEGIN [A-Z ]+-----)(.*)(-----END [A-Z ]+-----)/);
-    if (match) {
-      const base64 = match[2].replace(/\s+/g, '');
-      const chunks = base64.match(/.{1,64}/g) || [];
-      k = `${match[1]}\n${chunks.join('\n')}\n${match[3]}`;
-    }
+  // Always extract the Base64 content and cleanly rebuild the PEM
+  // This fixes any spaces, tabs, or weird line breaks introduced by pasting into web forms
+  const match = k.match(/(-----BEGIN [A-Z ]+-----)([\s\S]*?)(-----END [A-Z ]+-----)/);
+  if (match) {
+    const base64 = match[2].replace(/\s+/g, '');
+    const chunks = base64.match(/.{1,64}/g) || [];
+    k = `${match[1]}\n${chunks.join('\n')}\n${match[3]}`;
   }
   return k;
 }
