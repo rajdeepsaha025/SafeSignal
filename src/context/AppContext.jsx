@@ -1,4 +1,6 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { auth } from '../config/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const AppContext = createContext();
 
@@ -131,11 +133,33 @@ const upiRiskDatabase = {
 };
 
 export const AppProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({
-    username: 'J. Doe',
-    role: 'Senior Investigator',
-    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBydVq8_G1JVz7nJ8gwSwgaG_nASZKztnzBvcScAzK_rAp6wWgm9EGgODziFmE9XwUmw_aaJv67mtKZXI46b22qMqG1PI-jFntnR17tbKxpei1heHWWJre2uJIcNz8nanDEW-pVfmYKGojJpP0_zZnqVy2V8iIkszMh2MAUGaI9n_Mst25MhuPcRvyetSZBowRyhe1ADlhxe_6yLDEG0IKyA1GoDSSE7stll-AA-QdkgOqaDNmUfuq-',
-  });
+  const [currentUser, setCurrentUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const tokenResult = await user.getIdTokenResult();
+          setCurrentUser({
+            uid: user.uid,
+            email: user.email,
+            username: user.displayName || user.email.split('@')[0],
+            role: tokenResult.claims.role || 'USER',
+            avatar: user.photoURL || 'https://mui.com/static/images/avatar/1.jpg',
+          });
+        } catch (e) {
+          console.error("Failed to fetch claims", e);
+          setCurrentUser(null);
+        }
+      } else {
+        setCurrentUser(null);
+      }
+      setAuthLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
 
   const [pendingReports, setPendingReports] = useState(initialPendingReports);
   const [logs, setLogs] = useState(initialLogs);
@@ -258,6 +282,7 @@ export const AppProvider = ({ children }) => {
       value={{
         currentUser,
         setCurrentUser,
+        authLoading,
         pendingReports,
         logs,
         checkHistory,
