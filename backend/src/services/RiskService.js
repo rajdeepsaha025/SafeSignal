@@ -8,6 +8,7 @@ import upiIntelligenceService from './UPIIntelligenceService.js';
 import riskEngineService from './RiskEngineService.js';
 import riskExplanationService from './RiskExplanationService.js';
 import historyRepository from '../repositories/HistoryRepository.js';
+import analyticsService from './analytics/AnalyticsService.js';
 import { CHECK_SOURCES } from '../config/constants.js';
 
 // Simple in-memory cache for MVP (TTL: 5 minutes)
@@ -118,7 +119,7 @@ class RiskService {
    * Log the risk check asynchronously.
    */
   async _logCheckHistory(userId, upiId, result, source) {
-    await historyRepository.create({
+    const docRef = await historyRepository.create({
       userId,
       upiId,
       riskScore: result.riskScore,
@@ -126,6 +127,11 @@ class RiskService {
       confidence: result.confidenceLevel, // Maps to history's confidence field
       source,
       timestamp: new Date()
+    });
+
+    const isBlacklisted = result.signals?.some(s => s.type === 'BLACKLIST') || false;
+    analyticsService.recordCheck(docRef.id, { ...result, isBlacklisted }).catch(err => {
+      console.error('Failed to log check analytics:', err);
     });
   }
 }

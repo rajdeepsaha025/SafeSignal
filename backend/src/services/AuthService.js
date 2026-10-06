@@ -16,6 +16,7 @@
 import { auth } from '../config/firebaseAdmin.js';
 import authRepository from '../repositories/AuthRepository.js';
 import auditRepository from '../repositories/AuditRepository.js';
+import analyticsService from './analytics/AnalyticsService.js';
 import { USER_STATUS, ROLES } from '../config/constants.js';
 import logger from '../config/logger.js';
 
@@ -150,6 +151,9 @@ class AuthService {
         displayName: user.displayName ?? '',
         photoURL:    user.photoURL    ?? null,
       });
+      analyticsService.recordUserCreated(user.uid).catch(err => {
+        logger.warn('[AuthService] Failed to record user creation analytics', { error: err.message });
+      });
       return authRepository.findByUid(user.uid);
     }
 
@@ -173,6 +177,10 @@ class AuthService {
         metadata:  { timestamp: new Date().toISOString() },
       }),
     ]);
+    
+    analyticsService.recordUserActivity(uid, 'LOGIN').catch(err => {
+      logger.warn('[AuthService] Failed to record user activity analytics', { error: err.message });
+    });
   }
 
   /**

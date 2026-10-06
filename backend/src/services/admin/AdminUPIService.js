@@ -1,5 +1,6 @@
 import upiRepository from '../../repositories/UPIRepository.js';
 import auditRepository from '../../repositories/AuditRepository.js';
+import analyticsService from '../analytics/AnalyticsService.js';
 import { ApiError } from '../../utils/ApiError.js';
 import { HTTP_STATUS } from '../../config/constants.js';
 import { offsetPaginate } from '../../utils/firestoreHelpers.js';
@@ -94,6 +95,10 @@ class AdminUPIService {
       metadata: { reason }
     });
 
+    analyticsService.recordBlacklistChange(normalizedUpiId, 'BLACKLIST').catch(err => {
+      console.error('Failed to log blacklist analytics:', err);
+    });
+
     // In a real scenario, invalidate cache here. 
     // e.g., cacheService.invalidateUpiCache(normalizedUpiId);
   }
@@ -117,6 +122,10 @@ class AdminUPIService {
       action: 'UPI_UNBLACKLISTED',
       resource: normalizedUpiId,
       metadata: { reason }
+    });
+
+    analyticsService.recordBlacklistChange(normalizedUpiId, 'UNBLACKLIST').catch(err => {
+      console.error('Failed to log unblacklist analytics:', err);
     });
 
     // In a real scenario, invalidate cache here.

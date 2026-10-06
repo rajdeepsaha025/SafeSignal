@@ -6,6 +6,7 @@
 import { firestore } from '../config/firebaseAdmin.js';
 import reportRepository from '../repositories/ReportRepository.js';
 import riskService from './RiskService.js';
+import analyticsService from './analytics/AnalyticsService.js';
 import { COLLECTIONS, REPORT_STATUS } from '../config/constants.js';
 
 class ModerationService {
@@ -73,6 +74,9 @@ class ModerationService {
 
     const report = await reportRepository.findById(reportId);
     riskService.invalidateCache(report.upiId);
+    analyticsService.recordReportApproved(reportId, report.fraudType).catch(err => {
+      console.error('Failed to log report approval analytics:', err);
+    });
     return report;
   }
 
@@ -111,6 +115,9 @@ class ModerationService {
 
     const report = await reportRepository.findById(reportId);
     riskService.invalidateCache(report.upiId);
+    analyticsService.recordReportRejected(reportId, report.fraudType).catch(err => {
+      console.error('Failed to log report rejection analytics:', err);
+    });
     return report;
   }
 }

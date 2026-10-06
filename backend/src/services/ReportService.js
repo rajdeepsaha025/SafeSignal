@@ -5,6 +5,7 @@
 
 import { firestore } from '../config/firebaseAdmin.js';
 import reportRepository from '../repositories/ReportRepository.js';
+import analyticsService from './analytics/AnalyticsService.js';
 import { COLLECTIONS, REPORT_STATUS, RISK_LEVELS } from '../config/constants.js';
 
 class ReportService {
@@ -25,7 +26,7 @@ class ReportService {
     const upiId = this.normalizeUpiId(data.upiId);
     await this.checkDuplicateReport(upiId, user.uid);
 
-    return firestore.runTransaction(async (transaction) => {
+    const result = await firestore.runTransaction(async (transaction) => {
       const upiRef = firestore.collection(COLLECTIONS.UPI_PROFILES).doc(upiId);
       const upiDoc = await transaction.get(upiRef);
 
@@ -75,6 +76,12 @@ class ReportService {
 
       return { id: reportRef.id, ...reportData };
     });
+
+    analyticsService.recordReportSubmitted(result.id, data.fraudType).catch(err => {
+      console.error('Failed to log report submission analytics:', err);
+    });
+
+    return result;
   }
 
   async getMyReports(uid, options) {
