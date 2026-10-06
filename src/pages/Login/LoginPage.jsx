@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Card, Typography, TextField, Button, Link, useTheme, Alert } from '@mui/material';
 
+import { auth } from '../../config/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
 export default function LoginPage() {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -9,15 +12,27 @@ export default function LoginPage() {
   const [email, setEmail] = useState('analyst@safesignal.in');
   const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       setError('Please enter both email and password.');
       return;
     }
-    // Simulate successful login
-    navigate('/analytics');
+    
+    setLoading(true);
+    setError('');
+    
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/analytics');
+    } catch (err) {
+      console.error(err);
+      setError('Invalid email or password.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -90,6 +105,7 @@ export default function LoginPage() {
             type="submit"
             variant="contained"
             fullWidth
+            disabled={loading}
             sx={{
               bgcolor: theme.palette.primary.main,
               py: 1.5,
@@ -104,7 +120,7 @@ export default function LoginPage() {
               }
             }}
           >
-            Sign In
+            {loading ? 'Signing In...' : 'Sign In'}
           </Button>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1, px: 0.5 }}>

@@ -12,9 +12,9 @@ export default function Hero() {
   };
 
   return (
-    <Box 
-      sx={{ 
-        width: '100%', 
+    <Box
+      sx={{
+        width: '100%',
         position: 'relative',
         bgcolor: 'transparent',
       }}
@@ -44,23 +44,11 @@ export default function Hero() {
 
             {/* Search Box */}
             <Box sx={{ mt: 1, maxWidth: '480px', width: '100%' }}>
-              <SearchInput 
-                placeholder="Enter UPI ID (e.g. name@bank)" 
-                buttonText="Check UPI" 
+              <SearchInput
+                placeholder="Enter UPI ID (e.g. name@bank)"
+                buttonText="Check UPI"
                 onSearch={handleSearch}
               />
-            </Box>
-
-            {/* Trust Badges */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 1 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', '& > *': { border: '2px solid #ffffff', borderRadius: '50%' } }}>
-                <AvatarOverlay index={0} />
-                <AvatarOverlay index={1} />
-                <AvatarOverlay index={2} />
-              </Box>
-              <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, fontSize: '13px' }}>
-                Trusted by 50,000+ investigators
-              </Typography>
             </Box>
           </Box>
         </Grid>
@@ -78,14 +66,14 @@ export default function Hero() {
 function AvatarOverlay({ index }) {
   const bgColors = ['#e9edff', '#dce2f7', '#d6e3ff'];
   return (
-    <Box 
-      sx={{ 
-        width: 24, 
-        height: 24, 
+    <Box
+      sx={{
+        width: 24,
+        height: 24,
         bgcolor: bgColors[index],
         zIndex: 3 - index,
-        marginLeft: index > 0 ? '-8px' : 0 
-      }} 
+        marginLeft: index > 0 ? '-8px' : 0
+      }}
     />
   );
 }

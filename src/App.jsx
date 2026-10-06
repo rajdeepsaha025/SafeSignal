@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme/theme';
 import { AppProvider } from './context/AppContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Import Pages
 import HomePage from './pages/Home/HomePage';
@@ -21,13 +22,16 @@ export default function App() {
       <AppProvider>
         <Router>
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/check" element={<CheckPage />} />
-            <Route path="/analytics" element={<AnalyticsPage />} />
-            <Route path="/admin" element={<AdminPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/history" element={<HistoryPage />} />
+            
+            {/* Admin-Only Routes */}
+            <Route path="/analytics" element={<ProtectedRoute allowedRoles={['ADMIN']}><AnalyticsPage /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminPage /></ProtectedRoute>} />
+            <Route path="/history" element={<ProtectedRoute allowedRoles={['ADMIN']}><HistoryPage /></ProtectedRoute>} />
           </Routes>
         </Router>
       </AppProvider>

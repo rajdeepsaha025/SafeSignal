@@ -14,6 +14,13 @@ class ModerationService {
     return reportRepository.findPending(options);
   }
 
+  async getAllReports(options) {
+    if (options.status) {
+      return reportRepository.findByStatus(options.status, options);
+    }
+    return reportRepository.findAll(options);
+  }
+
   async _verifyAndGetReport(transaction, reportId) {
     const reportRef = firestore.collection(COLLECTIONS.REPORTS).doc(reportId);
     const reportDoc = await transaction.get(reportRef);

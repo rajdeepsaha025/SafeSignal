@@ -28,17 +28,26 @@ export default function Navbar() {
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     handleMenuClose();
+    if (currentUser) {
+      const { auth } = await import('../../config/firebase');
+      const { signOut } = await import('firebase/auth');
+      await signOut(auth);
+    }
     navigate('/login');
   };
+
+  const isAdmin = currentUser?.role === 'ADMIN';
 
   const navLinks = [
     { label: 'Home', path: '/' },
     { label: 'Check UPI', path: '/check' },
-    { label: 'Analytics', path: '/analytics' },
-    { label: 'History', path: '/history' },
-    { label: 'Admin', path: '/admin' }
+    ...(isAdmin ? [
+      { label: 'Analytics', path: '/analytics' },
+      { label: 'History', path: '/history' },
+      { label: 'Admin', path: '/admin' }
+    ] : [])
   ];
 
   return (
@@ -121,19 +130,15 @@ export default function Navbar() {
 
         {/* Actions */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <IconButton aria-label="notifications" color="default" size="small">
-            <Badge badgeContent={3} color="error">
-              <span className="material-symbols-outlined">notifications</span>
-            </Badge>
-          </IconButton>
-
-          <IconButton aria-label="settings" color="default" size="small" onClick={() => navigate('/admin')}>
-            <span className="material-symbols-outlined">settings</span>
-          </IconButton>
+          {isAdmin && (
+            <IconButton aria-label="settings" color="default" size="small" onClick={() => navigate('/admin')}>
+              <span className="material-symbols-outlined">settings</span>
+            </IconButton>
+          )}
 
           <Avatar
-            alt={currentUser.username}
-            src={currentUser.avatar}
+            alt={currentUser?.username || 'User'}
+            src={currentUser?.avatar || 'https://mui.com/static/images/avatar/1.jpg'}
             onClick={handleMenuOpen}
             sx={{
               width: 32,
@@ -154,11 +159,17 @@ export default function Navbar() {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <Box sx={{ px: 2, py: 1 }}>
-              <Typography variant="body2" sx={{ fontWeight: 600 }}>{currentUser.username}</Typography>
-              <Typography variant="caption" color="text.secondary">{currentUser.role}</Typography>
+              {currentUser ? (
+                <>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>{currentUser.username}</Typography>
+                  <Typography variant="caption" color="text.secondary">{currentUser.role}</Typography>
+                </>
+              ) : (
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>Not logged in</Typography>
+              )}
             </Box>
-            <MenuItem onClick={() => { handleMenuClose(); navigate('/history'); }}>Activity History</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            {currentUser && <MenuItem onClick={() => { handleMenuClose(); navigate('/history'); }}>Activity History</MenuItem>}
+            <MenuItem onClick={handleLogout}>{currentUser ? 'Logout' : 'Login'}</MenuItem>
           </Menu>
         </Box>
       </Toolbar>

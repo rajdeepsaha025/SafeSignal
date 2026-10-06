@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "build": "echo \"No build step required\"",
     "test": "vitest run",
     "lint": "eslint src/ --ext .js --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.js\"",
@@ -25,15 +26,19 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-rate-limit": "^7.3.1",
-    "firebase-admin": "^12.0.0",
+    "firebase-admin": "^14.5.0",
     "helmet": "^7.1.0",
     "morgan": "^1.10.0",
-    "uuid": "^10.0.0",
+    "uuid": "^14.0.2",
     "zod": "^3.25.76"
   },
   "devDependencies": {
     "eslint": "^9.5.0",
+<<<<<<< HEAD
     "nodemon": "^3.1.14",
+=======
+    "nodemon": "^1.14.10",
+>>>>>>> 92498f736b40bc518fa6ef60883b45542295e43c
     "prettier": "^3.3.2",
     "supertest": "^7.3.1",
     "vitest": "^5.0.0"
