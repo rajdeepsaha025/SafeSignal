@@ -38,12 +38,16 @@ export default function Navbar() {
     navigate('/login');
   };
 
+  const isAdmin = currentUser?.role === 'ADMIN';
+
   const navLinks = [
     { label: 'Home', path: '/' },
     { label: 'Check UPI', path: '/check' },
-    { label: 'Analytics', path: '/analytics' },
-    { label: 'History', path: '/history' },
-    { label: 'Admin', path: '/admin' }
+    ...(isAdmin ? [
+      { label: 'Analytics', path: '/analytics' },
+      { label: 'History', path: '/history' },
+      { label: 'Admin', path: '/admin' }
+    ] : [])
   ];
 
   return (
@@ -126,9 +130,11 @@ export default function Navbar() {
 
         {/* Actions */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <IconButton aria-label="settings" color="default" size="small" onClick={() => navigate('/admin')}>
-            <span className="material-symbols-outlined">settings</span>
-          </IconButton>
+          {isAdmin && (
+            <IconButton aria-label="settings" color="default" size="small" onClick={() => navigate('/admin')}>
+              <span className="material-symbols-outlined">settings</span>
+            </IconButton>
+          )}
 
           <Avatar
             alt={currentUser?.username || 'User'}
