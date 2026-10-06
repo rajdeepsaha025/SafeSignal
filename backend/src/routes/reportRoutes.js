@@ -5,7 +5,7 @@
 
 import { Router } from 'express';
 import { submitReport, getMyReports, getReportById } from '../controllers/ReportController.js';
-import { getPendingReports, approveReport, rejectReport } from '../controllers/ModerationController.js';
+import { getPendingReports, getAllReports, approveReport, rejectReport } from '../controllers/ModerationController.js';
 import { validate } from '../middlewares/validate.js';
 import { submitReportSchema, getReportsSchema } from '../validators/reportValidator.js';
 import { moderateReportSchema } from '../validators/moderationValidator.js';
@@ -23,6 +23,12 @@ router.get('/pending',
   authorizeRoles(ROLES.MODERATOR, ROLES.ADMIN),
   validate(getReportsSchema),
   getPendingReports
+);
+
+router.get('/all',
+  authorizeRoles(ROLES.MODERATOR, ROLES.ADMIN),
+  validate(getReportsSchema),
+  getAllReports
 );
 
 router.patch('/:reportId/approve',

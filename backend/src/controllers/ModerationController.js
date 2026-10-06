@@ -19,6 +19,18 @@ export const getPendingReports = asyncHandler(async (req, res) => {
   );
 });
 
+export const getAllReports = asyncHandler(async (req, res) => {
+  const options = {
+    limit: parseInt(req.query.limit, 10) || 20,
+    startAfter: req.query.startAfter,
+    status: req.query.status
+  };
+  const reports = await moderationService.getAllReports(options);
+  return res.status(HTTP_STATUS.OK).json(
+    ApiResponse.success(reports, 'Fetched all reports successfully.')
+  );
+});
+
 export const approveReport = asyncHandler(async (req, res) => {
   const { reportId } = req.params;
   const { moderationReason } = req.body;
