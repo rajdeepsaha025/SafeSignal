@@ -20,6 +20,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "axios": "^1.20.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -34,11 +35,7 @@
   },
   "devDependencies": {
     "eslint": "^9.5.0",
-<<<<<<< HEAD
     "nodemon": "^3.1.14",
-=======
-    "nodemon": "^1.14.10",
->>>>>>> 92498f736b40bc518fa6ef60883b45542295e43c
     "prettier": "^3.3.2",
     "supertest": "^7.3.1",
     "vitest": "^5.0.0"

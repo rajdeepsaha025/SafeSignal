@@ -1,0 +1,122 @@
+[
+  {
+    "feature": "checks_last_7d",
+    "importance": 0.1924568778023104
+  },
+  {
+    "feature": "rule_risk_score",
+    "importance": 0.18127662333091826
+  },
+  {
+    "feature": "check_velocity_7d",
+    "importance": 0.17888564073758853
+  },
+  {
+    "feature": "report_velocity_7d",
+    "importance": 0.07463910763964035
+  },
+  {
+    "feature": "reports_last_7d",
+    "importance": 0.0699592690878781
+  },
+  {
+    "feature": "checks_last_24h",
+    "importance": 0.06544699951474545
+  },
+  {
+    "feature": "unique_reporters",
+    "importance": 0.0543381620951112
+  },
+  {
+    "feature": "high_risk_checks_last_7d",
+    "importance": 0.047778378217105094
+  },
+  {
+    "feature": "reports_last_30d",
+    "importance": 0.04241025447680559
+  },
+  {
+    "feature": "has_previous_reports",
+    "importance": 0.03274947042207897
+  },
+  {
+    "feature": "total_reports",
+    "importance": 0.02916602469609765
+  },
+  {
+    "feature": "pending_reports",
+    "importance": 0.017464341038956773
+  },
+  {
+    "feature": "profile_age_days",
+    "importance": 0.005755480064130846
+  },
+  {
+    "feature": "duplicate_reports",
+    "importance": 0.0016932992137889697
+  },
+  {
+    "feature": "blacklist_signal",
+    "importance": 0.0008981836513326892
+  },
+  {
+    "feature": "investment_scam_reports",
+    "importance": 0.0008386768515751195
+  },
+  {
+    "feature": "refund_scam_reports",
+    "importance": 0.0007403435480937547
+  },
+  {
+    "feature": "job_scam_reports",
+    "importance": 0.0006559733895959757
+  },
+  {
+    "feature": "rejected_reports",
+    "importance": 0.0006412128321479158
+  },
+  {
+    "feature": "phishing_reports",
+    "importance": 0.0004929401519532168
+  },
+  {
+    "feature": "other_reports",
+    "importance": 0.0004226705018045173
+  },
+  {
+    "feature": "check_velocity_24h",
+    "importance": 0.00031166302176931655
+  },
+  {
+    "feature": "kyc_scam_reports",
+    "importance": 0.00027583494924464657
+  },
+  {
+    "feature": "marketplace_scam_reports",
+    "importance": 0.00021648648159261613
+  },
+  {
+    "feature": "qr_scam_reports",
+    "importance": 0.00015901984681655917
+  },
+  {
+    "feature": "digital_arrest_reports",
+    "importance": 0.00013643614440120432
+  },
+  {
+    "feature": "lottery_scam_reports",
+    "importance": 0.00010939101504529275
+  },
+  {
+    "feature": "is_known_upi",
+    "importance": 8.116420352990389e-05
+  },
+  {
+    "feature": "is_blacklisted",
+    "importance": 7.507394121147227e-08
+  },
+  {
+    "feature": "approved_reports",
+    "importance": 0.0
+  }
+]

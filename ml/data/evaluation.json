@@ -1,0 +1,58 @@
+{
+  "dataset_statistics": {
+    "total": 20000,
+    "legitimate": 15000,
+    "fraud": 5000
+  },
+  "metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "roc_auc": 1.0,
+    "pr_auc": 1.0
+  },
+  "confusion_matrix": [
+    [
+      2250,
+      0
+    ],
+    [
+      0,
+      750
+    ]
+  ],
+  "threshold_evaluation": {
+    "0.3": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "0.4": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "0.5": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "0.6": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "0.7": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "0.8": {
+      "precision": 1.0,
+      "recall": 0.9986666666666667,
+      "f1": 0.9993328885923949
+    }
+  },
+  "selected_threshold": 0.3
+}
