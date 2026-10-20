@@ -13,6 +13,7 @@
     "format": "prettier --write \"src/**/*.js\"",
     "seed": "node scripts/seedFirestore.js",
     "seed:clear": "node scripts/seedFirestore.js --clear",
+    "seed:users": "node scripts/createDemoUsers.js",
     "analytics:backfill": "node scripts/backfillAnalytics.js",
     "analytics:reconcile": "node scripts/reconcileAnalytics.js"
   },

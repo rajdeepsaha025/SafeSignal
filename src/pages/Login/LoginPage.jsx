@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Card, Typography, TextField, Button, Link, useTheme, Alert } from '@mui/material';
+import { Box, Card, Typography, TextField, Button, Link, useTheme, Alert, Chip, Stack } from '@mui/material';
 
 import { auth } from '../../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -9,8 +9,8 @@ export default function LoginPage() {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('analyst@safesignal.in');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('admin@safesignal.in');
+  const [password, setPassword] = useState('AdminPassword123!');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -82,6 +82,38 @@ export default function LoginPage() {
         </Box>
 
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+
+        <Box sx={{ mb: 2.5, p: 1.5, bgcolor: 'background.paper', borderRadius: 2, border: `1px dashed ${theme.palette.outline?.variant || '#e0e0e0'}` }}>
+          <Typography variant="caption" sx={{ display: 'block', mb: 1, fontWeight: 700, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            Quick Demo Credentials:
+          </Typography>
+          <Stack direction="row" spacing={1} justifyContent="center" flexWrap="wrap" useFlexGap>
+            <Chip
+              label="Admin"
+              size="small"
+              color={email === 'admin@safesignal.in' ? 'primary' : 'default'}
+              variant={email === 'admin@safesignal.in' ? 'filled' : 'outlined'}
+              onClick={() => { setEmail('admin@safesignal.in'); setPassword('AdminPassword123!'); setError(''); }}
+              sx={{ fontWeight: 600, cursor: 'pointer' }}
+            />
+            <Chip
+              label="Moderator"
+              size="small"
+              color={email === 'moderator@safesignal.in' ? 'primary' : 'default'}
+              variant={email === 'moderator@safesignal.in' ? 'filled' : 'outlined'}
+              onClick={() => { setEmail('moderator@safesignal.in'); setPassword('ModeratorPassword123!'); setError(''); }}
+              sx={{ fontWeight: 600, cursor: 'pointer' }}
+            />
+            <Chip
+              label="Citizen User"
+              size="small"
+              color={email === 'user@safesignal.in' ? 'primary' : 'default'}
+              variant={email === 'user@safesignal.in' ? 'filled' : 'outlined'}
+              onClick={() => { setEmail('user@safesignal.in'); setPassword('UserPassword123!'); setError(''); }}
+              sx={{ fontWeight: 600, cursor: 'pointer' }}
+            />
+          </Stack>
+        </Box>
 
         <Box component="form" onSubmit={handleLogin} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <TextField
