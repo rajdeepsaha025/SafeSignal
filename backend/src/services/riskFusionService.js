@@ -44,9 +44,14 @@ class RiskFusionService {
     const isBlacklisted = Boolean(intelligence.isBlacklisted || intelligence.profile?.isBlacklisted);
 
     const rawRuleScore = typeof engineResult.score === 'number' ? engineResult.score : 0;
-    const ruleScore = Number.isFinite(rawRuleScore)
+    let ruleScore = Number.isFinite(rawRuleScore)
       ? Math.max(0, Math.min(100, Math.round(rawRuleScore)))
       : 0;
+
+    // If ruleScore is 0 but intelligence.profile?.riskScore is present in Firestore:
+    if (ruleScore === 0 && typeof intelligence.profile?.riskScore === 'number' && intelligence.profile.riskScore > 0) {
+      ruleScore = Math.max(0, Math.min(100, Math.round(intelligence.profile.riskScore)));
+    }
 
     // 3. Process Community Intelligence (without double counting)
     const communityStats = this.calculateCommunitySignals(intelligence);

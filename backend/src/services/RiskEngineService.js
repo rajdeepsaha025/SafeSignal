@@ -54,13 +54,19 @@ class RiskEngineService {
 
     const signals = this.evaluators.map(evaluator => evaluator.evaluate(context));
 
-    const finalScore = this._calculateFinalScore(signals);
+    const computedScore = this._calculateFinalScore(signals);
+    const finalScore = (computedScore === 0 && typeof intelligence.profile?.riskScore === 'number' && intelligence.profile.riskScore > 0)
+      ? intelligence.profile.riskScore
+      : computedScore;
+
     const riskLevel = this._determineRiskLevel(finalScore);
     const confidenceLevel = this._determineConfidence(context, finalScore);
     
     // Extract fraud categories
     const scamSignal = signals.find(s => s.name === RISK_SIGNALS.SCAM_CATEGORY);
-    const fraudCategories = scamSignal && scamSignal.categories ? scamSignal.categories : [];
+    const fraudCategories = (scamSignal && scamSignal.categories && scamSignal.categories.length > 0)
+      ? scamSignal.categories
+      : (intelligence.profile?.fraudCategories || []);
 
     return {
       score: finalScore,

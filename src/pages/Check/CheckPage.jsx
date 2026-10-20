@@ -46,16 +46,18 @@ export default function CheckPage() {
     }
   }, [location.state]);
 
-  const triggerCheck = (queryStr) => {
+  const triggerCheck = async (queryStr) => {
     if (!queryStr.trim()) return;
     setLoading(true);
     setHasChecked(true);
 
-    // Simulate 600ms latency for risk computation
-    setTimeout(() => {
-      checkUpiRisk(queryStr);
+    try {
+      await checkUpiRisk(queryStr);
+    } catch (err) {
+      console.error('Failed to check risk profile:', err);
+    } finally {
       setLoading(false);
-    }, 600);
+    }
   };
 
   const handleSearchSubmit = () => {

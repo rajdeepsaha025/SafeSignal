@@ -21,9 +21,15 @@ class UPIIntelligenceService {
     ]);
 
     const reports = reportsResult?.items || [];
-    const pendingCount = reports.filter(r => r.status === REPORT_STATUS.PENDING).length;
-    const approvedCount = reports.filter(r => r.status === REPORT_STATUS.APPROVED).length;
-    const rejectedCount = reports.filter(r => r.status === REPORT_STATUS.REJECTED).length;
+    const pendingCount = reports.length > 0
+      ? reports.filter(r => r.status === REPORT_STATUS.PENDING).length
+      : (profile?.pendingReports || 0);
+    const approvedCount = reports.length > 0
+      ? reports.filter(r => r.status === REPORT_STATUS.APPROVED).length
+      : (profile?.verifiedReports || 0);
+    const rejectedCount = reports.length > 0
+      ? reports.filter(r => r.status === REPORT_STATUS.REJECTED).length
+      : (profile?.rejectedReports || 0);
 
     const approvedReports = reports.filter(r => r.status === REPORT_STATUS.APPROVED);
     
@@ -39,7 +45,7 @@ class UPIIntelligenceService {
       profile: profile || null,
       isBlacklisted: profile?.isBlacklisted || false,
       reportStats: {
-        total: reports.length,
+        total: reports.length > 0 ? reports.length : (approvedCount + pendingCount + rejectedCount),
         pendingCount,
         approvedCount,
         rejectedCount

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { auth } from '../config/firebase';
+import { auth, db } from '../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
 const AppContext = createContext();
 
@@ -170,55 +171,98 @@ export const AppProvider = ({ children }) => {
 
   const [currentCheckResult, setCurrentCheckResult] = useState(null);
 
-  // Perform UPI Risk Check
-  const checkUpiRisk = (id) => {
+  // Perform UPI Risk Check from Firebase Firestore upi_profiles
+  const checkUpiRisk = async (id) => {
     // Clean string input
     const cleanId = id.trim().toLowerCase();
-    
-    // Check if we have records, otherwise generate mock data
+
+    // 1. Check Firebase Firestore `upi_profiles` collection
+    try {
+      const profileRef = doc(db, 'upi_profiles', cleanId);
+      const snap = await getDoc(profileRef);
+
+      if (snap.exists()) {
+        const data = snap.data();
+        const score = typeof data.riskScore === 'number' ? data.riskScore : 0;
+        const rawLevel = data.riskLevel || (score >= 75 ? 'CRITICAL' : score >= 50 ? 'HIGH' : score >= 25 ? 'MEDIUM' : 'LOW');
+        const status = `${rawLevel.toUpperCase()} RISK`;
+        const verifiedCount = data.verifiedReports ?? 0;
+        const isBlacklisted = Boolean(data.isBlacklisted);
+        const reasons = data.riskReasons || [];
+        const cats = data.fraudCategories || [];
+
+        const result = {
+          targetId: cleanId,
+          name: cleanId.includes('@') ? cleanId.split('@')[0].charAt(0).toUpperCase() + '***' : cleanId,
+          riskScore: score,
+          status: status,
+          firstSeen: data.createdAt?.toDate ? data.createdAt.toDate().toLocaleDateString() : (data.lastReported?.toDate ? data.lastReported.toDate().toLocaleDateString() : 'Recorded in SafeSignal'),
+          lastActivity: data.lastChecked?.toDate ? data.lastChecked.toDate().toLocaleDateString() : (data.lastUpdated?.toDate ? data.lastUpdated.toDate().toLocaleDateString() : 'Recently'),
+          evidence: {
+            communityReports: verifiedCount,
+            externalDatabases: [
+              { name: 'I4C Registry', status: isBlacklisted ? 'Flagged' : (score >= 50 ? 'Flagged' : 'Clean') },
+              { name: 'Bank Blacklist', status: isBlacklisted ? 'Flagged' : 'Clean' },
+            ],
+            mlConfidence: typeof data.mlProbability === 'number' ? Math.round(data.mlProbability * 100) : score,
+          },
+          timeline: [
+            ...(isBlacklisted ? [{ time: 'Blacklist Alert', text: 'UPI ID is flagged on SafeSignal Internal Blacklist.' }] : []),
+            ...(reasons.length > 0 ? reasons.map((r) => ({ time: 'Risk Factor', text: typeof r === 'string' ? r : r.title || r.message || 'Reported activity' })) : []),
+            ...(cats.length > 0 ? [{ time: 'Categories', text: `Flagged under categories: ${cats.join(', ')}` }] : []),
+            { time: 'Firebase Record', text: `Risk profile retrieved from Firebase Firestore (Score: ${score}/100, Level: ${rawLevel}).` },
+          ],
+        };
+
+        setCurrentCheckResult(result);
+        setCheckHistory((prev) => [
+          { targetId: result.targetId, riskScore: result.riskScore, status: result.status, time: 'Just Now' },
+          ...prev.filter((item) => item.targetId !== result.targetId),
+        ]);
+        return result;
+      }
+    } catch (err) {
+      console.warn('[AppContext] Firestore profile lookup warning:', err.message);
+    }
+
+    // 2. Check local fallback database
     if (upiRiskDatabase[cleanId]) {
       const result = upiRiskDatabase[cleanId];
       setCurrentCheckResult(result);
-      // Add to check history
       setCheckHistory((prev) => [
         { targetId: result.targetId, riskScore: result.riskScore, status: result.status, time: 'Just Now' },
-        ...prev.filter(item => item.targetId !== result.targetId)
+        ...prev.filter((item) => item.targetId !== result.targetId),
       ]);
       return result;
-    } else {
-      // Create dynamically generated mock data for demo
-      const randomScore = Math.floor(Math.random() * 100);
-      let status = 'LOW RISK';
-      if (randomScore > 75) status = 'HIGH RISK';
-      else if (randomScore > 35) status = 'MEDIUM RISK';
-
-      const dynamicResult = {
-        targetId: cleanId,
-        name: cleanId.includes('@') ? cleanId.split('@')[0].charAt(0).toUpperCase() + '***' : 'U*** K****',
-        riskScore: randomScore,
-        status: status,
-        firstSeen: 'Just Now',
-        lastActivity: 'Just Now',
-        evidence: {
-          communityReports: status === 'HIGH RISK' ? 5 : status === 'MEDIUM RISK' ? 1 : 0,
-          externalDatabases: [
-            { name: 'I4C Registry', status: status === 'HIGH RISK' ? 'Flagged' : 'Clean' },
-            { name: 'Bank Blacklist', status: 'Clean' },
-          ],
-          mlConfidence: randomScore,
-        },
-        timeline: [
-          { time: 'Just Now', text: 'Checked on SafeSignal Platform.' }
-        ]
-      };
-
-      setCurrentCheckResult(dynamicResult);
-      setCheckHistory((prev) => [
-        { targetId: dynamicResult.targetId, riskScore: dynamicResult.riskScore, status: dynamicResult.status, time: 'Just Now' },
-        ...prev
-      ]);
-      return dynamicResult;
     }
+
+    // 3. For an unrecorded/clean UPI ID: clean score is 0, LOW RISK (never generate random numbers!)
+    const cleanResult = {
+      targetId: cleanId,
+      name: cleanId.includes('@') ? cleanId.split('@')[0].charAt(0).toUpperCase() + '***' : 'Unknown',
+      riskScore: 0,
+      status: 'LOW RISK',
+      firstSeen: 'First Time Checked',
+      lastActivity: 'None',
+      evidence: {
+        communityReports: 0,
+        externalDatabases: [
+          { name: 'I4C Registry', status: 'Clean' },
+          { name: 'Bank Blacklist', status: 'Clean' },
+        ],
+        mlConfidence: 0,
+      },
+      timeline: [
+        { time: 'Just Now', text: 'No prior fraud reports or risk indicators found in SafeSignal.' },
+      ],
+    };
+
+    setCurrentCheckResult(cleanResult);
+    setCheckHistory((prev) => [
+      { targetId: cleanResult.targetId, riskScore: cleanResult.riskScore, status: cleanResult.status, time: 'Just Now' },
+      ...prev.filter((item) => item.targetId !== cleanResult.targetId),
+    ]);
+    return cleanResult;
   };
 
   // Submit Fraud Report
