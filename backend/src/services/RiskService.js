@@ -7,6 +7,7 @@
 import upiIntelligenceService from './UPIIntelligenceService.js';
 import riskEngineService from './RiskEngineService.js';
 import riskExplanationService from './RiskExplanationService.js';
+import riskFusionService from './riskFusionService.js';
 import historyRepository from '../repositories/HistoryRepository.js';
 import analyticsService from './analytics/AnalyticsService.js';
 import mlService from './mlService.js';
@@ -39,31 +40,42 @@ class RiskService {
     // 2. Gather Intelligence
     const intelligence = await upiIntelligenceService.gatherIntelligence(upiId);
 
-    // 3. Evaluate Risk
+    // 3. Evaluate Rule-Based Risk Engine
     const engineResult = riskEngineService.evaluate(intelligence);
 
     // 4. Generate Explanations
     const summary = riskExplanationService.generateSummary(engineResult.riskLevel, engineResult.signals, intelligence.isUnknown);
-    const reasons = riskExplanationService.generateReasons(engineResult.signals);
 
     // 4b. Machine Learning Inference (Phase 8)
     const features = this._extractFeatures(upiId, intelligence, engineResult);
     const mlResult = await mlService.predict(features);
 
-    // 5. Build Response
+    // 4c. Intelligent Risk Fusion Engine (Phase 9)
+    const fusionResult = riskFusionService.evaluateFusion(upiId, intelligence, engineResult, mlResult);
+
+    // 5. Build Unified Response (Phase 9 structure + legacy backward compatibility)
     const responseData = {
       upiId,
-      riskScore: engineResult.score,
-      riskLevel: engineResult.riskLevel,
+
+      // Phase 9 Contracts
+      risk: fusionResult.risk,
+      signals: {
+        ...fusionResult.signals,
+        rule_signals: engineResult.signals,
+      },
+      assessment: fusionResult.assessment,
+
+      // Preserved Legacy Fields
+      riskScore: fusionResult.risk.score,
+      riskLevel: fusionResult.risk.level,
       confidenceLevel: engineResult.confidenceLevel,
       summary,
-      reasons,
-      signals: engineResult.signals,
+      reasons: fusionResult.risk.reasons,
       fraudCategories: engineResult.fraudCategories,
       lastReportedAt: intelligence.recentReports.length > 0 
         ? intelligence.recentReports[0].createdAt 
         : null,
-      checkedAt: new Date().toISOString(),
+      checkedAt: fusionResult.assessment.scored_at,
       ml: mlResult
     };
 
@@ -117,8 +129,18 @@ class RiskService {
   /**
    * Clear cache for a specific UPI ID (e.g. called when a new report is approved)
    */
+  /**
+   * Clear cache for a specific UPI ID (e.g. called when a new report is approved or blacklist updated)
+   */
   invalidateCache(upiId) {
     riskCache.delete(this.normalizeUpiId(upiId));
+  }
+
+  /**
+   * Clear the entire in-memory risk cache (e.g. called when configuration or active model changes)
+   */
+  clearAllCache() {
+    riskCache.clear();
   }
 
   /**
@@ -188,22 +210,43 @@ class RiskService {
   }
 
   /**
-   * Log the risk check asynchronously.
+   * Log the risk check asynchronously with compact assessment snapshot.
    */
   async _logCheckHistory(userId, upiId, result, source) {
+    const finalScore = result.risk?.score ?? result.riskScore ?? 0;
+    const finalLevel = result.risk?.level ?? result.riskLevel ?? 'LOW';
+    const ruleScore = result.signals?.rule_score ?? result.riskScore ?? 0;
+    const mlSignal = result.signals?.ml || {};
+
     const docRef = await historyRepository.create({
       userId,
       upiId,
-      riskScore: result.riskScore,
-      riskLevel: result.riskLevel,
+      riskScore: finalScore,
+      riskLevel: finalLevel,
       confidence: result.confidenceLevel, // Maps to history's confidence field
       source,
-      ml: result.ml,
-      timestamp: new Date()
+      assessment: {
+        finalScore,
+        riskLevel: finalLevel,
+        ruleScore,
+        mlAvailable: Boolean(mlSignal.available),
+        mlEligible: Boolean(mlSignal.eligible_for_fusion),
+        mlModelVersion: mlSignal.model_version || null,
+        fusionEngineVersion: result.assessment?.engine_version || 'fusion-v1.0.0',
+        configVersion: result.assessment?.config_version || '1.0.0',
+        reasonCodes: (result.risk?.reasons || []).map((r) => r.code).filter(Boolean),
+        timestamp: new Date(),
+      },
+      timestamp: new Date(),
     });
 
-    const isBlacklisted = result.signals?.some(s => s.type === 'BLACKLIST') || false;
-    analyticsService.recordCheck(docRef.id, { ...result, isBlacklisted }).catch(err => {
+    const isBlacklisted =
+      result.signals?.blacklist?.matched ||
+      (Array.isArray(result.signals) && result.signals.some((s) => s.type === 'BLACKLIST')) ||
+      (result.signals?.rule_signals && result.signals.rule_signals.some((s) => s.name === 'BLACKLIST')) ||
+      false;
+
+    analyticsService.recordCheck(docRef.id, { ...result, isBlacklisted }).catch((err) => {
       console.error('Failed to log check analytics:', err);
     });
   }

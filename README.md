@@ -482,6 +482,7 @@ The backend is structured to deploy smoothly on **Render** as a Web Service:
 - [x] **Phase 5:** Community Fraud Reporting & Moderation Queue
 - [x] **Phase 6:** Administrative Dashboard, Audit Logging & Analytics Service
 - [x] **Phase 6.5:** Frontend Firebase Authentication, Live Sign-In & Protected Routes
-- [x] **Phase 7:** Machine Learning Inference Pipeline (FastAPI & Random Forest)
-- [x] **Phase 8:** Integration of ML scoring into Risk Engine & explainable feature metrics
-- [ ] **Phase 9:** Integration with National Cyber Crime Reporting Portal (I4C) & bank registry feeds
+- [x] **Phase 7:** Analytics & Fraud Intelligence Layer
+- [x] **Phase 8:** Machine Learning Inference Pipeline (FastAPI, Scikit-Learn Random Forest)
+- [x] **Phase 9:** Intelligent Risk Fusion Engine (Score Fusion, Shadow Mode, Blacklist Overrides & Explainability)
+- [ ] **Phase 10:** Integration with National Cyber Crime Reporting Portal (I4C) & bank registry feeds

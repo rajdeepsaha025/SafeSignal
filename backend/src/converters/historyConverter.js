@@ -20,7 +20,7 @@ import { RISK_LEVELS, CHECK_SOURCES } from '../config/constants.js';
 
 export const historyConverter = {
   toFirestore(record) {
-    return {
+    const data = {
       userId:     record.userId    ?? 'anonymous',
       upiId:      record.upiId,
       riskScore:  record.riskScore  ?? 0,
@@ -29,6 +29,23 @@ export const historyConverter = {
       source:     record.source     ?? CHECK_SOURCES.WEB,
       timestamp:  record.timestamp  ?? FieldValue.serverTimestamp(),
     };
+
+    if (record.assessment) {
+      data.assessment = {
+        finalScore:          record.assessment.finalScore ?? record.riskScore ?? 0,
+        riskLevel:           record.assessment.riskLevel ?? record.riskLevel ?? RISK_LEVELS.LOW,
+        ruleScore:           record.assessment.ruleScore ?? 0,
+        mlAvailable:         Boolean(record.assessment.mlAvailable),
+        mlEligible:          Boolean(record.assessment.mlEligible),
+        mlModelVersion:      record.assessment.mlModelVersion || null,
+        fusionEngineVersion: record.assessment.fusionEngineVersion || 'fusion-v1.0.0',
+        configVersion:       record.assessment.configVersion || '1.0.0',
+        reasonCodes:         Array.isArray(record.assessment.reasonCodes) ? record.assessment.reasonCodes : [],
+        timestamp:           record.assessment.timestamp ?? new Date(),
+      };
+    }
+
+    return data;
   },
 
   fromFirestore(snapshot) {
@@ -42,6 +59,10 @@ export const historyConverter = {
       confidence: data.confidence ?? 1,
       source:     data.source     ?? CHECK_SOURCES.WEB,
       timestamp:  data.timestamp?.toDate() ?? null,
+      assessment: data.assessment ? {
+        ...data.assessment,
+        timestamp: data.assessment.timestamp?.toDate ? data.assessment.timestamp.toDate() : data.assessment.timestamp,
+      } : null,
     };
   },
 };

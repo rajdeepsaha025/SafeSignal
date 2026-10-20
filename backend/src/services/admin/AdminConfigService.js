@@ -1,5 +1,6 @@
 import configRepository, { CONFIG_KEYS } from '../../repositories/ConfigRepository.js';
 import auditRepository from '../../repositories/AuditRepository.js';
+import riskService from '../RiskService.js';
 import { runTransaction } from '../../utils/firestoreHelpers.js';
 
 class AdminConfigService {
@@ -63,6 +64,9 @@ class AdminConfigService {
         changedFields: Object.keys(updates)
       }
     });
+
+    // Invalidate in-memory risk cache so new weights/thresholds take effect immediately
+    riskService.clearAllCache();
 
     return result;
   }

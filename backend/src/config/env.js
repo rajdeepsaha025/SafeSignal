@@ -76,6 +76,8 @@ export const env = {
 
   // External services
   ML_SERVICE_URL: process.env.ML_SERVICE_URL || 'http://localhost:8000',
+  ML_SYNTHETIC_MODEL_POLICY: process.env.ML_SYNTHETIC_MODEL_POLICY || 'SHADOW',
+  ML_REQUEST_TIMEOUT_MS: parseInt(process.env.ML_REQUEST_TIMEOUT_MS || '3000', 10),
 
   // CORS
   ALLOWED_ORIGINS: (
